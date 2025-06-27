@@ -118,6 +118,21 @@ uploader = S3EmailUploader()
 upload_results = uploader.upload_all_emails()
 ```
 
+### LLM Extraction
+
+After emails are downloaded you can run an extraction pass on the
+attachments using OpenAI:
+
+```bash
+python scripts/run_llm_extraction.py              # process all directories
+python scripts/run_llm_extraction.py --limit 5    # only first 5 directories
+python scripts/run_llm_extraction.py --resume     # skip ones already processed
+```
+
+Each email directory will receive an `extracted.json` file containing the fields
+defined in `app/processing/gpt4o_prompt.json`. See `sample.json` for an example
+of the output.
+
 ## Data Structure
 
 ### Local Storage
