@@ -1,0 +1,10 @@
+django>=5.0
+djangorestframework
+python-dotenv
+msal
+boto3
+openai
+pillow
+tqdm
+geopy
+sqlite-utils
