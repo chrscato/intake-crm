@@ -6,9 +6,9 @@ GRAPH_SCOPE = ["https://graph.microsoft.com/.default"]
 
 def _token():
     cca = ConfidentialClientApplication(
-        settings.AZURE_CLIENT_ID,
-        authority=f"https://login.microsoftonline.com/{settings.AZURE_TENANT_ID}",
-        client_credential=settings.AZURE_CLIENT_SECRET,
+        settings.GRAPH_CLIENT_ID,
+        authority=f"https://login.microsoftonline.com/{settings.GRAPH_TENANT_ID}",
+        client_credential=settings.GRAPH_CLIENT_SECRET,
     )
     return cca.acquire_token_for_client(scopes=GRAPH_SCOPE)["access_token"]
 
