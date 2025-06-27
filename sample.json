@@ -1,0 +1,18 @@
+{
+  "referral": true,
+  "employer_address": "123 Industrial Way, Houston, TX",
+  "employer_email": "hr@example.com",
+  "injury_description": ["Left knee sprain", "Lower back pain"],
+  "intake_client_company": "Best Insurance",
+  "intake_client_email": "intake@example.com",
+  "intake_client_name": "Jane Doe",
+  "intake_client_phone": "555-123-4567",
+  "injured_worker_dob": "1985-04-12",
+  "injured_worker_doi": "2024-06-01",
+  "intake_instructions": "Schedule MRI as soon as possible.",
+  "injured_worker_address": "456 Home St, Houston, TX",
+  "injured_worker_email": "worker@example.com",
+  "injured_worker_phone": "555-555-7890",
+  "intake_preferred_provider": "ABC Radiology",
+  "intake_requested_procedure": ["MRI of left knee", "EMG"]
+}
