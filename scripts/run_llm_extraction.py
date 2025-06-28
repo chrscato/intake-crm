@@ -6,6 +6,7 @@ attachments using the OpenAI agent.
 """
 import argparse
 import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -120,6 +121,9 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Run LLM extraction on attachments")
     parser.add_argument("--limit", type=int, default=None, help="Limit number of directories to process")
     parser.add_argument("--resume", action="store_true", help="Skip directories that already contain extracted.json")
+    parser.add_argument("--ingest-db", action="store_true", help="Ingest extracted data to database after extraction")
+    parser.add_argument("--archive", action="store_true", help="Archive processed emails after extraction")
+    parser.add_argument("--db-path", type=str, default="intake-crm.db", help="Database path for ingestion")
     args = parser.parse_args()
 
     base_dir = Path("data/emails")
@@ -134,6 +138,26 @@ def main() -> None:
     print(f"🚀 Running extraction on {len(directories)} directories")
     for directory in directories:
         process_directory(directory, args.resume)
+
+    # Run helper scripts if requested
+    if args.ingest_db:
+        print("\n📊 Ingesting extracted data to database...")
+        try:
+            subprocess.run([
+                sys.executable, "scripts/ingest_to_db.py", 
+                "--db-path", args.db_path
+            ], check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"❌ Database ingestion failed: {e}")
+    
+    if args.archive:
+        print("\n📦 Archiving processed emails...")
+        try:
+            subprocess.run([
+                sys.executable, "scripts/archive_processed_emails.py"
+            ], check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"❌ Archiving failed: {e}")
 
 
 if __name__ == "__main__":
