@@ -25,14 +25,15 @@ class Referral(models.Model):
 class Provider(models.Model):
     """ORM mapping for the ``providers`` table."""
 
-    dba_name_billing_name = models.CharField(max_length=255)
-    address_full = models.CharField(max_length=255)
-    billing_name = models.CharField(max_length=255, blank=True)
-    tin = models.CharField(max_length=50, blank=True)
-    npi = models.CharField(max_length=50, blank=True)
-    provider_type = models.CharField(max_length=100, blank=True)
-    latitude = models.FloatField(null=True, blank=True)
-    longitude = models.FloatField(null=True, blank=True)
+    # Map to the actual column names in the database
+    dba_name_billing_name = models.CharField(max_length=255, db_column='"DBA Name Billing Name"')
+    address_full = models.CharField(max_length=255, db_column='"Address 1 Full"')
+    billing_name = models.CharField(max_length=255, blank=True, db_column='"Billing Name"')
+    tin = models.CharField(max_length=50, blank=True, db_column='"TIN"')
+    npi = models.CharField(max_length=50, blank=True, db_column='"NPI"')
+    provider_type = models.CharField(max_length=100, blank=True, db_column='"Provider Type"')
+    latitude = models.FloatField(null=True, blank=True, db_column='"Latitude"')
+    longitude = models.FloatField(null=True, blank=True, db_column='"Longitude"')
 
     class Meta:
         managed = False
