@@ -1,0 +1,11 @@
+{% extends 'referrals/base.html' %}
+{% block content %}
+<h2>Referrals</h2>
+<ul>
+  {% for r in referrals %}
+    <li><a href="{% url 'referral_detail' r.pk %}">{{ r.email_id }}</a></li>
+  {% empty %}
+    <li>No referrals found.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

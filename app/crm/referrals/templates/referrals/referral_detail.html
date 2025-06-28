@@ -1,0 +1,10 @@
+{% extends 'referrals/base.html' %}
+{% block content %}
+<h2>Referral {{ referral.pk }}</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Save</button>
+</form>
+<p><a href="{% url 'provider_selection' referral.pk %}">Choose Provider</a></p>
+{% endblock %}

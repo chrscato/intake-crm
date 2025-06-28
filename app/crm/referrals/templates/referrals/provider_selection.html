@@ -1,0 +1,28 @@
+{% extends 'referrals/base.html' %}
+{% block content %}
+<h2>Nearby Providers</h2>
+<table>
+<tr>
+  <th>DBA Name Billing Name</th>
+  <th>Address 1 Full</th>
+  <th>Billing Name</th>
+  <th>TIN</th>
+  <th>NPI</th>
+  <th>Provider Type</th>
+  <th>Distance (mi)</th>
+</tr>
+{% for p in providers %}
+<tr>
+  <td>{{ p.dba_name_billing_name }}</td>
+  <td>{{ p.address_full }}</td>
+  <td>{{ p.billing_name }}</td>
+  <td>{{ p.tin }}</td>
+  <td>{{ p.npi }}</td>
+  <td>{{ p.provider_type }}</td>
+  <td>{{ p.distance|floatformat:1 }}</td>
+</tr>
+{% empty %}
+<tr><td colspan="7">No providers found.</td></tr>
+{% endfor %}
+</table>
+{% endblock %}
