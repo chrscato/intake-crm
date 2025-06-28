@@ -13,6 +13,16 @@ PROMPT_PATH = Path(__file__).with_name("gpt4o_prompt.json")
 with open(PROMPT_PATH, "r", encoding="utf-8") as f:
     PROMPT = json.load(f)["prompt"]
 
+
+def parse_json_from_response(text: str) -> dict:
+    """Parse a JSON string that may be wrapped in triple backtick fences."""
+    cleaned = text.strip()
+    if cleaned.startswith("```") and cleaned.endswith("```"):
+        cleaned = cleaned[3:-3].strip()
+        if cleaned.lower().startswith("json"):
+            cleaned = cleaned[4:].lstrip()
+    return json.loads(cleaned)
+
 def pdf_to_b64_images(pdf_bytes: bytes, max_dim_px: int = 2200, jpeg_q: int = 80) -> list[str]:
     """Render each PDF page to base64-encoded JPEG."""
     doc = fitz.open(stream=pdf_bytes, filetype="pdf")
@@ -107,7 +117,7 @@ def extract(file_bytes: bytes, email_body: str, file_extension: str = ".pdf"):
                 raise ValueError("OpenAI returned empty response")
                 
             print(f"🔧 DEBUG: Attempting to parse JSON...")
-            parsed_data = json.loads(content)
+            parsed_data = parse_json_from_response(content)
             print(f"🔧 DEBUG: JSON parsing successful")
             print(f"🔧 DEBUG: Parsed data keys: {list(parsed_data.keys()) if isinstance(parsed_data, dict) else 'Not a dict'}")
             return parsed_data
