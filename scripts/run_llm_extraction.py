@@ -12,7 +12,7 @@ from pathlib import Path
 # Add repository root to Python path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from app.processing.openai_agent import extract
+from app.processing.openai_agent import extract_consolidated
 
 
 def process_directory(path: Path, resume: bool) -> bool:
@@ -51,11 +51,15 @@ def process_directory(path: Path, resume: bool) -> bool:
 
     email_text = metadata.get("body", {}).get("content", "")
     print(f"🔧 DEBUG: Email text length: {len(email_text)} characters")
-    results = []
 
     if attachments_dir.exists():
         attachments = list(attachments_dir.iterdir())
         print(f"🔧 DEBUG: Found {len(attachments)} attachments")
+        
+        # Collect all supported attachments
+        supported_attachments = []
+        file_bytes_list = []
+        file_extensions = []
         
         for attachment in sorted(attachments):
             print(f"🔧 DEBUG: Checking attachment: {attachment.name}")
@@ -63,34 +67,53 @@ def process_directory(path: Path, resume: bool) -> bool:
             print(f"🔧 DEBUG: Supported file type: {attachment.suffix.lower() in {'.pdf', '.png', '.jpg', '.jpeg'}}")
             
             if attachment.suffix.lower() in {".pdf", ".png", ".jpg", ".jpeg"}:
-                print(f"🔍 Processing {attachment.name}")
+                supported_attachments.append(attachment.name)
+                print(f"🔍 Adding {attachment.name} to consolidated processing")
                 try:
                     print(f"🔧 DEBUG: Reading file bytes...")
                     file_bytes = attachment.read_bytes()
                     print(f"🔧 DEBUG: File size: {len(file_bytes)} bytes")
                     
-                    print(f"🔧 DEBUG: Calling extract function...")
-                    data = extract(file_bytes, email_text, attachment.suffix)
-                    print(f"🔧 DEBUG: Extract function completed successfully")
-                    
-                    results.append({"attachment": attachment.name, "data": data})
-                    print(f"🔧 DEBUG: Added result for {attachment.name}")
+                    file_bytes_list.append(file_bytes)
+                    file_extensions.append(attachment.suffix)
+                    print(f"🔧 DEBUG: Added {attachment.name} to processing list")
                 except Exception as exc:
-                    print(f"🔧 DEBUG: Exception during extraction: {type(exc).__name__}: {exc}")
-                    print(f"❌ Extraction failed for {attachment.name}: {exc}")
-                    results.append({"attachment": attachment.name, "error": str(exc)})
+                    print(f"❌ Failed to read {attachment.name}: {exc}")
+                    return False
             else:
                 print(f"🔧 DEBUG: Skipping unsupported file: {attachment.name}")
 
-    if results:
-        print(f"🔧 DEBUG: Saving {len(results)} results to {extracted_file}")
-        with open(extracted_file, "w", encoding="utf-8") as f:
-            json.dump(results, f, indent=2)
-        print(f"✅ Saved results to {extracted_file}")
-        return True
-
-    print(f"ℹ️  No supported attachments in {path.name}")
-    return False
+        if file_bytes_list:
+            print(f"🔧 DEBUG: Processing {len(file_bytes_list)} attachments together")
+            try:
+                print(f"🔧 DEBUG: Calling consolidated extract function...")
+                consolidated_data = extract_consolidated(file_bytes_list, email_text, file_extensions)
+                print(f"🔧 DEBUG: Consolidated extraction completed successfully")
+                
+                # Save the consolidated result
+                result = {
+                    "consolidated_data": consolidated_data,
+                    "processed_attachments": supported_attachments,
+                    "email_subject": metadata.get("subject", ""),
+                    "email_from": metadata.get("from", {}).get("emailAddress", {}).get("address", "")
+                }
+                
+                print(f"🔧 DEBUG: Saving consolidated result to {extracted_file}")
+                with open(extracted_file, "w", encoding="utf-8") as f:
+                    json.dump(result, f, indent=2)
+                print(f"✅ Saved consolidated results to {extracted_file}")
+                return True
+                
+            except Exception as exc:
+                print(f"🔧 DEBUG: Exception during consolidated extraction: {type(exc).__name__}: {exc}")
+                print(f"❌ Consolidated extraction failed: {exc}")
+                return False
+        else:
+            print(f"ℹ️  No supported attachments in {path.name}")
+            return False
+    else:
+        print(f"ℹ️  No attachments directory in {path.name}")
+        return False
 
 
 def main() -> None:
