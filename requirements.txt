@@ -10,3 +10,4 @@ geopy
 sqlite-utils
 requests>=2.31.0
 pathlib2; python_version < "3.4"
+PyMuPDF
