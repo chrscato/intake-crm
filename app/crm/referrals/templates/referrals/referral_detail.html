@@ -3,8 +3,41 @@
 <h2>Referral {{ referral.pk }}</h2>
 <form method="post">
   {% csrf_token %}
-  {{ form.as_p }}
+  <p>
+    {{ form.email_id.label_tag }}<br>
+    {{ form.email_id }}
+  </p>
+  <p>
+    {{ form.raw_s3_key.label_tag }}<br>
+    {{ form.raw_s3_key }}
+  </p>
+  <p>
+    {{ form.extracted_json.label_tag }}<br>
+    {{ form.extracted_json }}
+  </p>
+  <p>
+    {{ form.corrected_json.label_tag }}<br>
+    {{ form.corrected_json }}
+  </p>
+  <p>
+    {{ form.processed.label_tag }} {{ form.processed }}
+  </p>
+  <p>
+    {{ form.latitude.label_tag }}<br>
+    {{ form.latitude }}
+  </p>
+  <p>
+    {{ form.longitude.label_tag }}<br>
+    {{ form.longitude }}
+  </p>
   <button type="submit">Save</button>
 </form>
+
+{% if form.latitude.value and form.longitude.value %}
+<p>
+  <a href="https://www.google.com/maps?q={{ form.latitude.value }},{{ form.longitude.value }}" target="_blank">View Map</a>
+</p>
+{% endif %}
+
 <p><a href="{% url 'provider_selection' referral.pk %}">Choose Provider</a></p>
 {% endblock %}
