@@ -2,13 +2,15 @@
 """LLM Extraction CLI
 
 Iterate over downloaded email directories and extract structured data from
-attachments using the OpenAI agent.
+attachments using the OpenAI agent, writing directly to database columns.
 """
 import argparse
 import json
+import sqlite3
 import subprocess
 import sys
 from pathlib import Path
+from datetime import datetime
 
 # Add repository root to Python path
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -16,17 +18,215 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from app.processing.openai_agent import extract_consolidated
 
 
-def process_directory(path: Path, resume: bool) -> bool:
-    """Run extraction for a single email directory.
+def get_database_connection(db_path: str) -> sqlite3.Connection:
+    """Get database connection and ensure table exists."""
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    
+    # Ensure referrals table exists with all required columns
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS referrals (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            email_id TEXT UNIQUE NOT NULL,
+            email_subject TEXT,
+            email_from TEXT,
+            email_received_datetime TEXT,
+            referral BOOLEAN,
+            employer_address TEXT,
+            employer_email TEXT,
+            injury_description TEXT,
+            diagnosis_code TEXT,
+            icd_code TEXT,
+            diagnosis_description TEXT,
+            intake_client_company TEXT,
+            intake_client_email TEXT,
+            intake_client_name TEXT,
+            intake_adjuster_name TEXT,
+            intake_adjuster_email TEXT,
+            intake_adjuster_phone TEXT,
+            intake_client_phone TEXT,
+            patient_name TEXT,
+            patient_gender TEXT,
+            patient_id TEXT,
+            order_number TEXT,
+            patient_dob TEXT,
+            patient_doi TEXT,
+            intake_instructions TEXT,
+            patient_address TEXT,
+            patient_email TEXT,
+            patient_phone TEXT,
+            intake_preferred_provider TEXT,
+            intake_requested_procedure TEXT,
+            patient_instructions TEXT,
+            priority TEXT,
+            referring_provider_name TEXT,
+            referring_provider_npi TEXT,
+            referring_provider_address TEXT,
+            referring_provider_email TEXT,
+            referring_provider_phone TEXT,
+            processed_attachments TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+    
+    conn.commit()
+    return conn
+
+
+def update_referral_in_database(conn: sqlite3.Connection, email_id: str, consolidated_data: dict, 
+                               processed_attachments: list, email_subject: str, email_from: str) -> bool:
+    """Update referral record in database with extracted data."""
+    try:
+        cursor = conn.cursor()
+        
+        # Check if referral exists
+        cursor.execute("SELECT id FROM referrals WHERE email_id = ?", (email_id,))
+        existing = cursor.fetchone()
+        
+        if existing:
+            # Update existing record
+            cursor.execute("""
+                UPDATE referrals SET 
+                    email_subject = ?, email_from = ?,
+                    patient_name = ?, patient_dob = ?, patient_doi = ?,
+                    patient_gender = ?, patient_id = ?, patient_address = ?,
+                    patient_email = ?, patient_phone = ?,
+                    order_number = ?, priority = ?, 
+                    injury_description = ?, diagnosis_code = ?, icd_code = ?,
+                    diagnosis_description = ?, intake_client_company = ?,
+                    intake_client_email = ?, intake_client_name = ?,
+                    intake_client_phone = ?, intake_adjuster_name = ?,
+                    intake_adjuster_email = ?, intake_adjuster_phone = ?,
+                    intake_preferred_provider = ?, intake_requested_procedure = ?,
+                    intake_instructions = ?, patient_instructions = ?,
+                    referring_provider_name = ?, referring_provider_npi = ?,
+                    referring_provider_address = ?, referring_provider_email = ?,
+                    referring_provider_phone = ?, employer_address = ?,
+                    employer_email = ?, processed_attachments = ?,
+                    updated_at = ?
+                WHERE email_id = ?
+            """, (
+                email_subject, email_from,
+                consolidated_data.get('patient_name'),
+                consolidated_data.get('patient_dob'), 
+                consolidated_data.get('patient_doi'),
+                consolidated_data.get('patient_gender'),
+                consolidated_data.get('patient_id'),
+                consolidated_data.get('patient_address'),
+                consolidated_data.get('patient_email'),
+                consolidated_data.get('patient_phone'),
+                consolidated_data.get('order_number'),
+                consolidated_data.get('priority'),
+                consolidated_data.get('injury_description'),
+                consolidated_data.get('diagnosis_code'),
+                consolidated_data.get('icd_code'),
+                consolidated_data.get('diagnosis_description'),
+                consolidated_data.get('intake_client_company'),
+                consolidated_data.get('intake_client_email'),
+                consolidated_data.get('intake_client_name'),
+                consolidated_data.get('intake_client_phone'),
+                consolidated_data.get('intake_adjuster_name'),
+                consolidated_data.get('intake_adjuster_email'),
+                consolidated_data.get('intake_adjuster_phone'),
+                consolidated_data.get('intake_preferred_provider'),
+                consolidated_data.get('intake_requested_procedure'),
+                consolidated_data.get('intake_instructions'),
+                consolidated_data.get('patient_instructions'),
+                consolidated_data.get('referring_provider_name'),
+                consolidated_data.get('referring_provider_npi'),
+                consolidated_data.get('referring_provider_address'),
+                consolidated_data.get('referring_provider_email'),
+                consolidated_data.get('referring_provider_phone'),
+                consolidated_data.get('employer_address'),
+                consolidated_data.get('employer_email'),
+                json.dumps(processed_attachments),
+                datetime.now().isoformat(),
+                email_id
+            ))
+            print(f"🔄 Updated existing referral for {email_id}")
+        else:
+            # Insert new record
+            cursor.execute("""
+                INSERT INTO referrals (
+                    email_id, email_subject, email_from,
+                    patient_name, patient_dob, patient_doi,
+                    patient_gender, patient_id, patient_address,
+                    patient_email, patient_phone,
+                    order_number, priority, 
+                    injury_description, diagnosis_code, icd_code,
+                    diagnosis_description, intake_client_company,
+                    intake_client_email, intake_client_name,
+                    intake_client_phone, intake_adjuster_name,
+                    intake_adjuster_email, intake_adjuster_phone,
+                    intake_preferred_provider, intake_requested_procedure,
+                    intake_instructions, patient_instructions,
+                    referring_provider_name, referring_provider_npi,
+                    referring_provider_address, referring_provider_email,
+                    referring_provider_phone, employer_address,
+                    employer_email, processed_attachments
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """, (
+                email_id, email_subject, email_from,
+                consolidated_data.get('patient_name'),
+                consolidated_data.get('patient_dob'), 
+                consolidated_data.get('patient_doi'),
+                consolidated_data.get('patient_gender'),
+                consolidated_data.get('patient_id'),
+                consolidated_data.get('patient_address'),
+                consolidated_data.get('patient_email'),
+                consolidated_data.get('patient_phone'),
+                consolidated_data.get('order_number'),
+                consolidated_data.get('priority'),
+                consolidated_data.get('injury_description'),
+                consolidated_data.get('diagnosis_code'),
+                consolidated_data.get('icd_code'),
+                consolidated_data.get('diagnosis_description'),
+                consolidated_data.get('intake_client_company'),
+                consolidated_data.get('intake_client_email'),
+                consolidated_data.get('intake_client_name'),
+                consolidated_data.get('intake_client_phone'),
+                consolidated_data.get('intake_adjuster_name'),
+                consolidated_data.get('intake_adjuster_email'),
+                consolidated_data.get('intake_adjuster_phone'),
+                consolidated_data.get('intake_preferred_provider'),
+                consolidated_data.get('intake_requested_procedure'),
+                consolidated_data.get('intake_instructions'),
+                consolidated_data.get('patient_instructions'),
+                consolidated_data.get('referring_provider_name'),
+                consolidated_data.get('referring_provider_npi'),
+                consolidated_data.get('referring_provider_address'),
+                consolidated_data.get('referring_provider_email'),
+                consolidated_data.get('referring_provider_phone'),
+                consolidated_data.get('employer_address'),
+                consolidated_data.get('employer_email'),
+                json.dumps(processed_attachments)
+            ))
+            print(f"✅ Created new referral for {email_id}")
+        
+        conn.commit()
+        return True
+        
+    except Exception as exc:
+        print(f"❌ Database update failed for {email_id}: {exc}")
+        conn.rollback()
+        return False
+
+
+def process_directory(path: Path, resume: bool, db_conn: sqlite3.Connection) -> bool:
+    """Run extraction for a single email directory and write directly to database.
 
     Returns True if extraction completed, False otherwise.
     """
     print(f"🔧 DEBUG: Processing directory: {path.name}")
     
-    extracted_file = path / "extracted.json"
-    if resume and extracted_file.exists():
-        print(f"⏩ Skipping {path.name} (already processed)")
-        return False
+    # Check if already processed (optional - for resume functionality)
+    if resume:
+        cursor = db_conn.cursor()
+        cursor.execute("SELECT id FROM referrals WHERE email_id = ?", (path.name,))
+        if cursor.fetchone():
+            print(f"⏩ Skipping {path.name} (already in database)")
+            return False
 
     summary_file = path / "summary.json"
     metadata_file = path / "email_metadata.json"
@@ -51,6 +251,8 @@ def process_directory(path: Path, resume: bool) -> bool:
         return False
 
     email_text = metadata.get("body", {}).get("content", "")
+    email_subject = metadata.get("subject", "")
+    email_from = metadata.get("from", {}).get("emailAddress", {}).get("address", "")
     print(f"🔧 DEBUG: Email text length: {len(email_text)} characters")
 
     if attachments_dir.exists():
@@ -91,19 +293,18 @@ def process_directory(path: Path, resume: bool) -> bool:
                 consolidated_data = extract_consolidated(file_bytes_list, email_text, file_extensions)
                 print(f"🔧 DEBUG: Consolidated extraction completed successfully")
                 
-                # Save the consolidated result
-                result = {
-                    "consolidated_data": consolidated_data,
-                    "processed_attachments": supported_attachments,
-                    "email_subject": metadata.get("subject", ""),
-                    "email_from": metadata.get("from", {}).get("emailAddress", {}).get("address", "")
-                }
+                # Write directly to database instead of creating JSON file
+                success = update_referral_in_database(
+                    db_conn, path.name, consolidated_data, 
+                    supported_attachments, email_subject, email_from
+                )
                 
-                print(f"🔧 DEBUG: Saving consolidated result to {extracted_file}")
-                with open(extracted_file, "w", encoding="utf-8") as f:
-                    json.dump(result, f, indent=2)
-                print(f"✅ Saved consolidated results to {extracted_file}")
-                return True
+                if success:
+                    print(f"✅ Successfully updated database for {path.name}")
+                    return True
+                else:
+                    print(f"❌ Failed to update database for {path.name}")
+                    return False
                 
             except Exception as exc:
                 print(f"🔧 DEBUG: Exception during consolidated extraction: {type(exc).__name__}: {exc}")
@@ -118,12 +319,11 @@ def process_directory(path: Path, resume: bool) -> bool:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Run LLM extraction on attachments")
+    parser = argparse.ArgumentParser(description="Run LLM extraction on attachments and write to database")
     parser.add_argument("--limit", type=int, default=None, help="Limit number of directories to process")
-    parser.add_argument("--resume", action="store_true", help="Skip directories that already contain extracted.json")
-    parser.add_argument("--ingest-db", action="store_true", help="Ingest extracted data to database after extraction")
+    parser.add_argument("--resume", action="store_true", help="Skip directories that already exist in database")
     parser.add_argument("--archive", action="store_true", help="Archive processed emails after extraction")
-    parser.add_argument("--db-path", type=str, default="intake-crm.db", help="Database path for ingestion")
+    parser.add_argument("--db-path", type=str, default="intake-crm.db", help="Database path")
     args = parser.parse_args()
 
     base_dir = Path("data/emails")
@@ -131,24 +331,32 @@ def main() -> None:
         print("No data/emails directory found")
         return
 
+    # Get database connection
+    print(f"🔗 Connecting to database: {args.db_path}")
+    try:
+        db_conn = get_database_connection(args.db_path)
+        print(f"✅ Database connection established")
+    except Exception as exc:
+        print(f"❌ Failed to connect to database: {exc}")
+        return
+
     directories = [p for p in sorted(base_dir.iterdir()) if p.is_dir()]
     if args.limit:
         directories = directories[: args.limit]
 
     print(f"🚀 Running extraction on {len(directories)} directories")
-    for directory in directories:
-        process_directory(directory, args.resume)
-
-    # Run helper scripts if requested
-    if args.ingest_db:
-        print("\n📊 Ingesting extracted data to database...")
-        try:
-            subprocess.run([
-                sys.executable, "scripts/ingest_to_db.py", 
-                "--db-path", args.db_path
-            ], check=True)
-        except subprocess.CalledProcessError as e:
-            print(f"❌ Database ingestion failed: {e}")
+    success_count = 0
+    
+    try:
+        for directory in directories:
+            if process_directory(directory, args.resume, db_conn):
+                success_count += 1
+        
+        print(f"✅ Successfully processed {success_count}/{len(directories)} directories")
+        
+    finally:
+        db_conn.close()
+        print(f"🔗 Database connection closed")
     
     if args.archive:
         print("\n📦 Archiving processed emails...")

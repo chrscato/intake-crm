@@ -1,28 +1,269 @@
 {% extends 'referrals/base.html' %}
+
 {% block content %}
-<h2>Nearby Providers</h2>
-<table>
-<tr>
-  <th>DBA Name Billing Name</th>
-  <th>Address 1 Full</th>
-  <th>Billing Name</th>
-  <th>TIN</th>
-  <th>NPI</th>
-  <th>Provider Type</th>
-  <th>Distance (mi)</th>
-</tr>
-{% for p in providers %}
-<tr>
-  <td>{{ p.dba_name_billing_name }}</td>
-  <td>{{ p.address_full }}</td>
-  <td>{{ p.billing_name }}</td>
-  <td>{{ p.tin }}</td>
-  <td>{{ p.npi }}</td>
-  <td>{{ p.provider_type }}</td>
-  <td>{{ p.distance|floatformat:1 }}</td>
-</tr>
-{% empty %}
-<tr><td colspan="7">No providers found.</td></tr>
-{% endfor %}
-</table>
+<style>
+.provider-table {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.provider-table th {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    padding: 15px 12px;
+    border: none;
+}
+
+.provider-table td {
+    padding: 12px;
+    vertical-align: middle;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.provider-table tbody tr:hover {
+    background-color: #f8f9fa;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: all 0.2s ease;
+}
+
+.assign-btn {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.assign-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    background: linear-gradient(135deg, #20c997, #17a2b8);
+    color: white;
+    text-decoration: none;
+}
+
+.distance-badge {
+    background: linear-gradient(135deg, #6c757d, #495057);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.provider-name {
+    font-weight: 600;
+    color: #495057;
+}
+
+.provider-address {
+    font-size: 0.85rem;
+    color: #6c757d;
+    margin-top: 2px;
+}
+
+.npi-badge {
+    background: linear-gradient(135deg, #17a2b8, #138496);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+.no-providers {
+    text-align: center;
+    padding: 60px 20px;
+    color: #6c757d;
+}
+
+.no-providers i {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    opacity: 0.5;
+}
+</style>
+
+<div class="container-fluid">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2><i class="fas fa-user-md"></i> Provider Selection</h2>
+                <div>
+                    <a href="{% url 'referral_detail' referral.pk %}" class="btn btn-outline-secondary btn-sm">
+                        <i class="fas fa-arrow-left"></i> Back to Referral
+                    </a>
+                    <a href="{% url 'referral_list' %}" class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-list"></i> All Referrals
+                    </a>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </div>
+
+    <!-- Referral Info -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-info-circle"></i> Referral Information</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>Patient:</strong><br>
+                            <span class="text-muted">{{ referral.patient_name|default:"Not specified" }}</span>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>Order Number:</strong><br>
+                            <span class="text-muted">{{ referral.order_number|default:"Not specified" }}</span>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>Priority:</strong><br>
+                            {% if referral.priority %}
+                                {% if referral.priority == 'Urgent' %}
+                                    <span class="badge bg-danger">{{ referral.priority }}</span>
+                                {% elif referral.priority == 'High' %}
+                                    <span class="badge bg-warning text-dark">{{ referral.priority }}</span>
+                                {% elif referral.priority == 'Medium' %}
+                                    <span class="badge bg-info">{{ referral.priority }}</span>
+                                {% elif referral.priority == 'Low' %}
+                                    <span class="badge bg-secondary">{{ referral.priority }}</span>
+                                {% else %}
+                                    <span class="badge bg-light text-dark">{{ referral.priority }}</span>
+                                {% endif %}
+                            {% else %}
+                                <span class="text-muted">Not specified</span>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-3">
+                            <strong>Location:</strong><br>
+                            {% if referral.latitude and referral.longitude %}
+                                <span class="text-success">
+                                    <i class="fas fa-map-marker-alt"></i> 
+                                    {{ referral.latitude|floatformat:4 }}, {{ referral.longitude|floatformat:4 }}
+                                </span>
+                            {% else %}
+                                <span class="text-warning">
+                                    <i class="fas fa-exclamation-triangle"></i> No coordinates
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Providers Table -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-search"></i> 
+                        {% if providers %}
+                            Nearby Providers ({{ providers|length }} found)
+                        {% else %}
+                            Nearby Providers
+                        {% endif %}
+                    </h5>
+                </div>
+                <div class="card-body p-0">
+                    {% if providers %}
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0 provider-table">
+                                <thead>
+                                    <tr>
+                                        <th>Provider Name</th>
+                                        <th>Address</th>
+                                        <th>NPI</th>
+                                        <th>Type</th>
+                                        <th>Distance</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for provider in providers %}
+                                    <tr>
+                                        <td>
+                                            <div class="provider-name">{{ provider.dba_name_billing_name }}</div>
+                                            {% if provider.billing_name and provider.billing_name != provider.dba_name_billing_name %}
+                                                <div class="provider-address">{{ provider.billing_name }}</div>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <div class="provider-address">{{ provider.address_full }}</div>
+                                        </td>
+                                        <td>
+                                            {% if provider.npi %}
+                                                <span class="npi-badge">{{ provider.npi }}</span>
+                                            {% else %}
+                                                <span class="text-muted">—</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if provider.provider_type %}
+                                                <span class="text-muted">{{ provider.provider_type }}</span>
+                                            {% else %}
+                                                <span class="text-muted">—</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <span class="distance-badge">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                {{ provider.distance|floatformat:1 }} mi
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <form method="post" action="{% url 'assign_provider' referral.pk %}" style="display: inline;">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="provider_id" value="{{ provider.id }}">
+                                                <button type="submit" class="assign-btn" 
+                                                        onclick="return confirm('Assign {{ provider.dba_name_billing_name }} to this referral?')">
+                                                    <i class="fas fa-check"></i> Assign
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="no-providers">
+                            <i class="fas fa-search"></i>
+                            <h4>No providers found</h4>
+                            <p>
+                                {% if referral.latitude and referral.longitude %}
+                                    No providers with valid coordinates found near this location.
+                                {% else %}
+                                    This referral doesn't have valid coordinates to search for nearby providers.
+                                {% endif %}
+                            </p>
+                            <a href="{% url 'referral_detail' referral.pk %}" class="btn btn-primary">
+                                <i class="fas fa-edit"></i> Edit Referral to Add Coordinates
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

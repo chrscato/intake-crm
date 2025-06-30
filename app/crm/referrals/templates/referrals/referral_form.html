@@ -1,0 +1,591 @@
+{% extends 'referrals/base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>
+                    {% if mode == 'create' %}
+                        <i class="fas fa-plus"></i> Create New Referral
+                    {% else %}
+                        <i class="fas fa-edit"></i> Edit Referral
+                    {% endif %}
+                </h2>
+                <div>
+                    <a href="{% url 'referral_list' %}" class="btn btn-outline-secondary btn-sm">
+                        <i class="fas fa-arrow-left"></i> Back to List
+                    </a>
+                    {% if mode == 'edit' %}
+                        <a href="{% url 'dashboard' %}" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-chart-bar"></i> Dashboard
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+            <hr>
+        </div>
+    </div>
+
+    <!-- Messages -->
+    {% if messages %}
+        <div class="row mb-4">
+            <div class="col-12">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- Form -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        {% if mode == 'create' %}
+                            <i class="fas fa-file-medical"></i> New Referral Information
+                        {% else %}
+                            <i class="fas fa-edit"></i> Referral: {{ referral.email_id }}
+                        {% endif %}
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+                        
+                        <!-- Email Information -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h6 class="text-primary border-bottom pb-2">
+                                    <i class="fas fa-envelope"></i> Email Information
+                                </h6>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.email_id.id_for_label }}" class="form-label">Email ID</label>
+                                    {{ form.email_id }}
+                                    {% if form.email_id.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.email_id.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.email_subject.id_for_label }}" class="form-label">Email Subject</label>
+                                    {{ form.email_subject }}
+                                    {% if form.email_subject.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.email_subject.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.email_from.id_for_label }}" class="form-label">Email From</label>
+                                    {{ form.email_from }}
+                                    {% if form.email_from.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.email_from.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.email_received_datetime.id_for_label }}" class="form-label">Received Date/Time</label>
+                                    {{ form.email_received_datetime }}
+                                    {% if form.email_received_datetime.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.email_received_datetime.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Patient Information -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h6 class="text-primary border-bottom pb-2">
+                                    <i class="fas fa-user"></i> Patient Information
+                                </h6>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.patient_name.id_for_label }}" class="form-label">Patient Name</label>
+                                    {{ form.patient_name }}
+                                    {% if form.patient_name.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.patient_name.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="{{ form.patient_gender.id_for_label }}" class="form-label">Gender</label>
+                                    {{ form.patient_gender }}
+                                    {% if form.patient_gender.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.patient_gender.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="{{ form.patient_id.id_for_label }}" class="form-label">Patient ID</label>
+                                    {{ form.patient_id }}
+                                    {% if form.patient_id.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.patient_id.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.patient_dob.id_for_label }}" class="form-label">Date of Birth</label>
+                                    {{ form.patient_dob }}
+                                    {% if form.patient_dob.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.patient_dob.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.patient_doi.id_for_label }}" class="form-label">Date of Injury</label>
+                                    {{ form.patient_doi }}
+                                    {% if form.patient_doi.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.patient_doi.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="{{ form.patient_address.id_for_label }}" class="form-label">Patient Address</label>
+                                    {{ form.patient_address }}
+                                    {% if form.patient_address.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.patient_address.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.patient_email.id_for_label }}" class="form-label">Patient Email</label>
+                                    {{ form.patient_email }}
+                                    {% if form.patient_email.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.patient_email.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.patient_phone.id_for_label }}" class="form-label">Patient Phone</label>
+                                    {{ form.patient_phone }}
+                                    {% if form.patient_phone.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.patient_phone.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Order and Medical Information -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h6 class="text-primary border-bottom pb-2">
+                                    <i class="fas fa-clipboard-list"></i> Order and Medical Information
+                                </h6>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.order_number.id_for_label }}" class="form-label">Order Number</label>
+                                    {{ form.order_number }}
+                                    {% if form.order_number.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.order_number.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="{{ form.priority.id_for_label }}" class="form-label">Priority</label>
+                                    {{ form.priority }}
+                                    {% if form.priority.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.priority.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="{{ form.intake_preferred_provider.id_for_label }}" class="form-label">Preferred Provider</label>
+                                    {{ form.intake_preferred_provider }}
+                                    {% if form.intake_preferred_provider.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.intake_preferred_provider.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="{{ form.intake_requested_procedure.id_for_label }}" class="form-label">Requested Procedure</label>
+                                    {{ form.intake_requested_procedure }}
+                                    {% if form.intake_requested_procedure.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.intake_requested_procedure.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="{{ form.injury_description.id_for_label }}" class="form-label">Injury Description</label>
+                                    {{ form.injury_description }}
+                                    {% if form.injury_description.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.injury_description.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="{{ form.diagnosis_code.id_for_label }}" class="form-label">Diagnosis Code</label>
+                                    {{ form.diagnosis_code }}
+                                    {% if form.diagnosis_code.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.diagnosis_code.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="{{ form.icd_code.id_for_label }}" class="form-label">ICD Code</label>
+                                    {{ form.icd_code }}
+                                    {% if form.icd_code.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.icd_code.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="{{ form.diagnosis_description.id_for_label }}" class="form-label">Diagnosis Description</label>
+                                    {{ form.diagnosis_description }}
+                                    {% if form.diagnosis_description.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.diagnosis_description.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Client and Adjuster Information -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h6 class="text-primary border-bottom pb-2">
+                                    <i class="fas fa-building"></i> Client and Adjuster Information
+                                </h6>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.intake_client_company.id_for_label }}" class="form-label">Client Company</label>
+                                    {{ form.intake_client_company }}
+                                    {% if form.intake_client_company.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.intake_client_company.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.intake_client_name.id_for_label }}" class="form-label">Client Name</label>
+                                    {{ form.intake_client_name }}
+                                    {% if form.intake_client_name.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.intake_client_name.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.intake_client_email.id_for_label }}" class="form-label">Client Email</label>
+                                    {{ form.intake_client_email }}
+                                    {% if form.intake_client_email.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.intake_client_email.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.intake_client_phone.id_for_label }}" class="form-label">Client Phone</label>
+                                    {{ form.intake_client_phone }}
+                                    {% if form.intake_client_phone.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.intake_client_phone.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.intake_adjuster_name.id_for_label }}" class="form-label">Adjuster Name</label>
+                                    {{ form.intake_adjuster_name }}
+                                    {% if form.intake_adjuster_name.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.intake_adjuster_name.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.intake_adjuster_email.id_for_label }}" class="form-label">Adjuster Email</label>
+                                    {{ form.intake_adjuster_email }}
+                                    {% if form.intake_adjuster_email.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.intake_adjuster_email.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="{{ form.intake_adjuster_phone.id_for_label }}" class="form-label">Adjuster Phone</label>
+                                    {{ form.intake_adjuster_phone }}
+                                    {% if form.intake_adjuster_phone.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.intake_adjuster_phone.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Referring Provider Information -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h6 class="text-primary border-bottom pb-2">
+                                    <i class="fas fa-user-md"></i> Referring Provider Information
+                                </h6>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.referring_provider_name.id_for_label }}" class="form-label">Provider Name</label>
+                                    {{ form.referring_provider_name }}
+                                    {% if form.referring_provider_name.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.referring_provider_name.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.referring_provider_npi.id_for_label }}" class="form-label">Provider NPI</label>
+                                    {{ form.referring_provider_npi }}
+                                    {% if form.referring_provider_npi.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.referring_provider_npi.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="{{ form.referring_provider_address.id_for_label }}" class="form-label">Provider Address</label>
+                                    {{ form.referring_provider_address }}
+                                    {% if form.referring_provider_address.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.referring_provider_address.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.referring_provider_email.id_for_label }}" class="form-label">Provider Email</label>
+                                    {{ form.referring_provider_email }}
+                                    {% if form.referring_provider_email.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.referring_provider_email.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.referring_provider_phone.id_for_label }}" class="form-label">Provider Phone</label>
+                                    {{ form.referring_provider_phone }}
+                                    {% if form.referring_provider_phone.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.referring_provider_phone.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Instructions -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h6 class="text-primary border-bottom pb-2">
+                                    <i class="fas fa-clipboard"></i> Instructions
+                                </h6>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.intake_instructions.id_for_label }}" class="form-label">Intake Instructions</label>
+                                    {{ form.intake_instructions }}
+                                    {% if form.intake_instructions.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.intake_instructions.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.patient_instructions.id_for_label }}" class="form-label">Patient Instructions</label>
+                                    {{ form.patient_instructions }}
+                                    {% if form.patient_instructions.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.patient_instructions.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Employer Information -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h6 class="text-primary border-bottom pb-2">
+                                    <i class="fas fa-briefcase"></i> Employer Information
+                                </h6>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.employer_address.id_for_label }}" class="form-label">Employer Address</label>
+                                    {{ form.employer_address }}
+                                    {% if form.employer_address.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.employer_address.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.employer_email.id_for_label }}" class="form-label">Employer Email</label>
+                                    {{ form.employer_email }}
+                                    {% if form.employer_email.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.employer_email.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- System Information -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h6 class="text-primary border-bottom pb-2">
+                                    <i class="fas fa-cog"></i> System Information
+                                </h6>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="{{ form.referral.id_for_label }}" class="form-label">Referral</label>
+                                    {{ form.referral }}
+                                    {% if form.referral.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.referral.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="{{ form.processed_attachments.id_for_label }}" class="form-label">Processed Attachments</label>
+                                    {{ form.processed_attachments }}
+                                    {% if form.processed_attachments.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.processed_attachments.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Form Actions -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        {% if mode == 'edit' and prev_referral %}
+                                            <a href="{% url 'referral_detail' prev_referral.pk %}" class="btn btn-outline-secondary">
+                                                <i class="fas fa-chevron-left"></i> Previous
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                    <div>
+                                        <a href="{% url 'referral_list' %}" class="btn btn-secondary me-2">
+                                            <i class="fas fa-times"></i> Cancel
+                                        </a>
+                                        <button type="submit" class="btn btn-primary">
+                                            {% if mode == 'create' %}
+                                                <i class="fas fa-save"></i> Create Referral
+                                            {% else %}
+                                                <i class="fas fa-save"></i> Save Changes
+                                            {% endif %}
+                                        </button>
+                                    </div>
+                                    <div>
+                                        {% if mode == 'edit' and next_referral %}
+                                            <a href="{% url 'referral_detail' next_referral.pk %}" class="btn btn-outline-secondary">
+                                                Next <i class="fas fa-chevron-right"></i>
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
