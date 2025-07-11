@@ -264,15 +264,6 @@ def referral_detail(request, pk):
     else:
         form = ReferralForm(instance=referral)
     
-    # Get the assigned provider object if one is assigned
-    assigned_provider = None
-    if referral.assigned_provider:
-        try:
-            assigned_provider = Provider.objects.get(id=referral.assigned_provider)
-        except Provider.DoesNotExist:
-            # Provider was deleted or ID is invalid
-            pass
-    
     # Get navigation (prev/next)
     all_referrals = Referral.objects.order_by('-created_at')
     current_index = list(all_referrals.values_list('pk', flat=True)).index(referral.pk)
@@ -288,7 +279,6 @@ def referral_detail(request, pk):
     context = {
         'form': form,
         'referral': referral,
-        'assigned_provider': assigned_provider,
         'mode': 'edit',
         'title': f'Edit Referral: {referral.email_id}',
         'prev_referral': prev_referral,
@@ -544,15 +534,8 @@ def assign_provider(request, pk):
         return redirect('provider_selection', pk=referral.pk)
     
     try:
-        # Debug: Print the provider_id we're looking for
-        print(f"Looking for provider with ID: {provider_id}")
-        
-        # Find the provider by UUID
         provider = Provider.objects.get(id=provider_id)
-        print(f"Found provider: {provider.dba_name_billing_name}")
-        
-        # Store the provider ID as a string in the assigned_provider field
-        referral.assigned_provider = str(provider_id)
+        referral.assigned_provider = provider_id
         referral.save()
         
         messages.success(
@@ -562,10 +545,8 @@ def assign_provider(request, pk):
         return redirect('referral_detail', pk=referral.pk)
         
     except Provider.DoesNotExist:
-        print(f"Provider with ID {provider_id} not found in database")
-        messages.error(request, f'Selected provider (ID: {provider_id}) not found in database.')
+        messages.error(request, 'Selected provider not found.')
         return redirect('provider_selection', pk=referral.pk)
     except Exception as e:
-        print(f"Unexpected error: {str(e)}")
         messages.error(request, f'Error assigning provider: {str(e)}')
         return redirect('provider_selection', pk=referral.pk)

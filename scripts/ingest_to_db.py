@@ -26,6 +26,7 @@ def create_database(db_path: Path) -> sqlite3.Connection:
         CREATE TABLE IF NOT EXISTS referrals (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             email_id TEXT UNIQUE NOT NULL,
+            conversation_id TEXT,
             email_subject TEXT,
             email_from TEXT,
             email_received_datetime TEXT,
@@ -105,6 +106,12 @@ def create_database(db_path: Path) -> sqlite3.Connection:
     except sqlite3.OperationalError:
         pass  # Column already exists
     
+    try:
+        cursor.execute("ALTER TABLE referrals ADD COLUMN conversation_id TEXT")
+        print("✅ Added conversation_id column")
+    except sqlite3.OperationalError:
+        pass  # Column already exists
+    
     # Create email_metadata table for additional email info
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS email_metadata (
@@ -173,6 +180,7 @@ def ingest_extracted_data(conn: sqlite3.Connection, email_dir: Path) -> bool:
         # Prepare referral data
         referral_data = {
             "email_id": email_id,
+            "conversation_id": email_metadata.get("conversationId"),
             "email_subject": extracted_data.get("email_subject"),
             "email_from": extracted_data.get("email_from"),
             "email_received_datetime": email_metadata.get("receivedDateTime"),

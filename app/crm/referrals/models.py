@@ -1,5 +1,7 @@
-import uuid
 from django.db import models
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class Referral(models.Model):
@@ -8,6 +10,7 @@ class Referral(models.Model):
     # Primary key and email fields
     id = models.AutoField(primary_key=True)
     email_id = models.CharField(max_length=255, unique=True, help_text="Unique identifier for the email")
+    conversation_id = models.CharField(max_length=255, blank=True, null=True, help_text="Outlook conversation ID for thread linking")
     email_subject = models.CharField(max_length=500, blank=True, null=True, help_text="Subject line of the email")
     email_from = models.CharField(max_length=255, blank=True, null=True, help_text="Sender email address")
     email_received_datetime = models.CharField(max_length=100, blank=True, null=True, help_text="When the email was received")
@@ -143,12 +146,55 @@ class Referral(models.Model):
             self.intake_client_company
         )
 
+    def get_outlook_web_url(self) -> str:
+        """Generate Outlook web URL for the specific email."""
+        if not self.email_id:
+            return ""
+        # Try the OWA format which seems to work better with Microsoft IDs
+        return f"https://outlook.office.com/owa/?ItemID={self.email_id}"
+
+    def get_outlook_conversation_url(self) -> str:
+        """Generate Outlook web URL for the conversation thread with folder-aware search."""
+        if not self.conversation_id:
+            return ""
+        
+        try:
+            from app.email_ingest.outlook_integration import OutlookIntegration
+            outlook = OutlookIntegration()
+            
+            # Search for conversation location across all folders
+            success, url, metadata = outlook.find_conversation_location(self.conversation_id)
+            
+            if success:
+                return url
+            else:
+                # Fallback to simple conversation search
+                logger.warning(f"Conversation search failed for {self.conversation_id}: {metadata.get('error')}")
+                return f"https://outlook.office.com/owa/?conversationId={self.conversation_id}"
+                
+        except Exception as e:
+            # Fallback to simple conversation search if integration fails
+            logger.error(f"Outlook integration failed for conversation {self.conversation_id}: {e}")
+            return f"https://outlook.office.com/owa/?conversationId={self.conversation_id}"
+
+    def get_outlook_conversation_metadata(self) -> dict:
+        """Get metadata about the conversation for debugging."""
+        if not self.conversation_id:
+            return {"error": "No conversation ID"}
+        
+        try:
+            from app.email_ingest.outlook_integration import OutlookIntegration
+            outlook = OutlookIntegration()
+            return outlook.get_conversation_summary(self.conversation_id)
+        except Exception as e:
+            return {"error": str(e)}
+
 
 class Provider(models.Model):
     """ORM mapping for the ``providers`` table."""
 
-    # Primary key - using UUIDField since the database column contains UUID values
-    id = models.UUIDField(primary_key=True, db_column='PrimaryKey')
+    # Primary key - using the actual column name from the database
+    id = models.AutoField(primary_key=True, db_column='PrimaryKey')
     
     # Map to the actual column names in the database
     dba_name_billing_name = models.CharField(max_length=255, db_column='"DBA Name Billing Name"')

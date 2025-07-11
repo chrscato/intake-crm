@@ -66,7 +66,41 @@ python scripts/archive_processed_emails.py --dry-run
 python scripts/archive_processed_emails.py --archive-dir data/archive
 ```
 
-### 4. `query_db.py` - Database Query Helper
+### 4. `upload_docs_to_s3.py` - S3 Document Upload Script
+Uploads email documents (metadata, summaries, attachments) from local directories to S3 bucket.
+
+**Usage:**
+```bash
+# Upload all email directories
+python scripts/upload_docs_to_s3.py
+
+# Upload with limit
+python scripts/upload_docs_to_s3.py --limit 10
+
+# Only upload directories with attachments
+python scripts/upload_docs_to_s3.py --has-attachments
+
+# Only upload directories with extracted data
+python scripts/upload_docs_to_s3.py --has-extracted
+
+# Upload by date range
+python scripts/upload_docs_to_s3.py --date-from 2024-01-01 --date-to 2024-01-31
+
+# Custom S3 prefix
+python scripts/upload_docs_to_s3.py --s3-prefix "referrals/{email_id}"
+
+# Dry run (see what would be uploaded)
+python scripts/upload_docs_to_s3.py --dry-run
+```
+
+**Features:**
+- ✅ Flexible filtering (attachments, extracted data, date ranges)
+- ✅ Custom S3 prefix templates
+- ✅ Dry run mode for testing
+- ✅ Detailed progress reporting
+- ✅ Error handling and retry logic
+
+### 5. `query_db.py` - Database Query Helper
 Simple utility to explore and query the database.
 
 **Usage:**
@@ -101,7 +135,12 @@ python scripts/ingest_to_db.py
 python scripts/query_db.py --list-referrals
 ```
 
-### 4. Archive Processed Emails
+### 4. Upload to S3 (Optional)
+```bash
+python scripts/upload_docs_to_s3.py --has-extracted
+```
+
+### 5. Archive Processed Emails
 ```bash
 python scripts/archive_processed_emails.py
 ```

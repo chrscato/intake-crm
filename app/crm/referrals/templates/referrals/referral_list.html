@@ -205,6 +205,9 @@
                                         <th>Referring Provider</th>
                                         <th>Status</th>
                                         <th>Created</th>
+                                        <th class="text-center" style="width:60px;" title="Outlook">
+                                            <i class="fab fa-microsoft"></i>
+                                        </th>
                                         <th width="120">Actions</th>
                                     </tr>
                                 </thead>
@@ -290,6 +293,19 @@
                                                 <span class="text-muted">—</span>
                                             {% endif %}
                                         </td>
+                                        <td class="text-center align-middle" style="width:60px;">
+                                            {% if referral.get_outlook_web_url %}
+                                                <a href="{{ referral.get_outlook_web_url }}" class="btn btn-sm btn-outline-primary" target="_blank" rel="noopener"
+                                                   title="Open in Outlook Web" data-bs-toggle="tooltip">
+                                                    <i class="fab fa-microsoft"></i>
+                                                </a>
+                                            {% else %}
+                                                <button class="btn btn-sm btn-outline-secondary disabled" style="pointer-events: none;" tabindex="-1"
+                                                        title="No Outlook link available" data-bs-toggle="tooltip" aria-disabled="true">
+                                                    <i class="fab fa-microsoft"></i>
+                                                </button>
+                                            {% endif %}
+                                        </td>
                                         <td>
                                             <div class="btn-group-vertical action-buttons" role="group">
                                                 <a href="{% url 'referral_detail' referral.pk %}" class="btn btn-primary mb-1" title="Edit Referral">
@@ -337,7 +353,7 @@
                                             <a class="page-link" href="?page={{ num }}{% if request.GET.urlencode %}&{{ request.GET.urlencode }}{% endif %}">{{ num }}</a>
                                         </li>
                                     {% endif %}
-                                {% endfor %}
+  {% endfor %}
 
                                 {% if referrals.has_next %}
                                     <li class="page-item">
@@ -351,7 +367,7 @@
                                         </a>
                                     </li>
                                 {% endif %}
-                            </ul>
+</ul>
                         </nav>
                         {% endif %}
 

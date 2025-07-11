@@ -112,6 +112,35 @@
                             </div>
                         </div>
 
+                        <!-- Outlook Email Thread Integration Section -->
+                        {% if mode == 'edit' and referral.conversation_id %}
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h6 class="text-primary border-bottom pb-2">
+                                    <i class="fab fa-microsoft"></i> Email Thread Access
+                                </h6>
+                            </div>
+                            <div class="col-12">
+                                <div class="alert alert-info d-flex align-items-center">
+                                    <i class="fab fa-microsoft me-2"></i>
+                                    <div class="flex-grow-1">
+                                        <strong>Reference the complete email thread while editing:</strong>
+                                        <div class="mt-2">
+                                            <a href="{{ referral.get_outlook_conversation_url }}" class="btn btn-outline-primary btn-sm" target="_blank" rel="noopener">
+                                                <i class="fas fa-comments me-1"></i> Open Email Thread
+                                                <i class="fas fa-external-link-alt ms-1"></i>
+                                            </a>
+                                        </div>
+                                        <small class="text-muted mt-2 d-block">
+                                            <i class="fas fa-info-circle me-1"></i>
+                                            Opens the complete conversation thread in new tab. Searches across all folders to find the current location.
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+
                         <!-- Patient Information -->
                         <div class="row mb-4">
                             <div class="col-12">

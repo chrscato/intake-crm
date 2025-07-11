@@ -1,0 +1,4 @@
+## to run for 
+
+
+python scripts/run_email_ingestion.py --max-emails 10

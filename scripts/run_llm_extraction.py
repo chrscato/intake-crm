@@ -28,6 +28,7 @@ def get_database_connection(db_path: str) -> sqlite3.Connection:
         CREATE TABLE IF NOT EXISTS referrals (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             email_id TEXT UNIQUE NOT NULL,
+            conversation_id TEXT,
             email_subject TEXT,
             email_from TEXT,
             email_received_datetime TEXT,
@@ -75,7 +76,8 @@ def get_database_connection(db_path: str) -> sqlite3.Connection:
 
 
 def update_referral_in_database(conn: sqlite3.Connection, email_id: str, consolidated_data: dict, 
-                               processed_attachments: list, email_subject: str, email_from: str) -> bool:
+                               processed_attachments: list, email_subject: str, email_from: str, 
+                               conversation_id: str = None) -> bool:
     """Update referral record in database with extracted data."""
     try:
         cursor = conn.cursor()
@@ -88,7 +90,7 @@ def update_referral_in_database(conn: sqlite3.Connection, email_id: str, consoli
             # Update existing record
             cursor.execute("""
                 UPDATE referrals SET 
-                    email_subject = ?, email_from = ?,
+                    conversation_id = ?, email_subject = ?, email_from = ?,
                     patient_name = ?, patient_dob = ?, patient_doi = ?,
                     patient_gender = ?, patient_id = ?, patient_address = ?,
                     patient_email = ?, patient_phone = ?,
@@ -107,7 +109,7 @@ def update_referral_in_database(conn: sqlite3.Connection, email_id: str, consoli
                     updated_at = ?
                 WHERE email_id = ?
             """, (
-                email_subject, email_from,
+                conversation_id, email_subject, email_from,
                 consolidated_data.get('patient_name'),
                 consolidated_data.get('patient_dob'), 
                 consolidated_data.get('patient_doi'),
@@ -149,7 +151,7 @@ def update_referral_in_database(conn: sqlite3.Connection, email_id: str, consoli
             # Insert new record
             cursor.execute("""
                 INSERT INTO referrals (
-                    email_id, email_subject, email_from,
+                    email_id, conversation_id, email_subject, email_from,
                     patient_name, patient_dob, patient_doi,
                     patient_gender, patient_id, patient_address,
                     patient_email, patient_phone,
@@ -165,9 +167,9 @@ def update_referral_in_database(conn: sqlite3.Connection, email_id: str, consoli
                     referring_provider_address, referring_provider_email,
                     referring_provider_phone, employer_address,
                     employer_email, processed_attachments
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """, (
-                email_id, email_subject, email_from,
+                email_id, conversation_id, email_subject, email_from,
                 consolidated_data.get('patient_name'),
                 consolidated_data.get('patient_dob'), 
                 consolidated_data.get('patient_doi'),
@@ -226,7 +228,7 @@ def process_directory(path: Path, resume: bool, db_conn: sqlite3.Connection) -> 
         cursor.execute("SELECT id FROM referrals WHERE email_id = ?", (path.name,))
         if cursor.fetchone():
             print(f"⏩ Skipping {path.name} (already in database)")
-            return False
+        return False
 
     summary_file = path / "summary.json"
     metadata_file = path / "email_metadata.json"
@@ -253,6 +255,7 @@ def process_directory(path: Path, resume: bool, db_conn: sqlite3.Connection) -> 
     email_text = metadata.get("body", {}).get("content", "")
     email_subject = metadata.get("subject", "")
     email_from = metadata.get("from", {}).get("emailAddress", {}).get("address", "")
+    conversation_id = metadata.get("conversationId")
     print(f"🔧 DEBUG: Email text length: {len(email_text)} characters")
 
     if attachments_dir.exists():
@@ -296,7 +299,7 @@ def process_directory(path: Path, resume: bool, db_conn: sqlite3.Connection) -> 
                 # Write directly to database instead of creating JSON file
                 success = update_referral_in_database(
                     db_conn, path.name, consolidated_data, 
-                    supported_attachments, email_subject, email_from
+                    supported_attachments, email_subject, email_from, conversation_id
                 )
                 
                 if success:
