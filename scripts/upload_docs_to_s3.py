@@ -12,6 +12,16 @@ from pathlib import Path
 from datetime import datetime
 from typing import List, Dict, Optional
 
+# Fix Windows console encoding
+if sys.platform.startswith('win'):
+    import os
+    os.environ['PYTHONIOENCODING'] = 'utf-8'
+    # Force UTF-8 encoding for stdout
+    if hasattr(sys.stdout, 'reconfigure'):
+        sys.stdout.reconfigure(encoding='utf-8')
+    if hasattr(sys.stderr, 'reconfigure'):
+        sys.stderr.reconfigure(encoding='utf-8')
+
 # Add the app directory to the Python path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 

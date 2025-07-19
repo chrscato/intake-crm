@@ -63,9 +63,8 @@ class S3EmailUploader:
         
         # Generate S3 prefix if not provided
         if not s3_prefix:
-            timestamp = datetime.now().strftime("%Y/%m/%d")
             email_name = email_dir.name
-            s3_prefix = f"emails/{timestamp}/{email_name}"
+            s3_prefix = f"emails/{email_name}"
         
         results = {
             "email_dir": str(email_dir),
@@ -173,7 +172,7 @@ class S3EmailUploader:
         
         return total_results
     
-    def list_uploaded_emails(self, s3_prefix: str = "emails/") -> List[Dict]:
+    def list_uploaded_emails(self, s3_prefix: str = "emails") -> List[Dict]:
         """List all uploaded emails in S3."""
         try:
             response = self.s3_client.list_objects_v2(

@@ -1,0 +1,62 @@
+2025-07-18 15:07:46,650 - INFO - [STARTING] Automated pipeline at 2025-07-18 15:07:46.649080
+2025-07-18 15:07:46,650 - INFO - [LOG] Log file: logs\pipeline_20250718_150746.log
+2025-07-18 15:07:46,650 - INFO - 🔍 Checking prerequisites...
+2025-07-18 15:07:46,651 - INFO - ✅ All prerequisites satisfied
+2025-07-18 15:07:46,651 - INFO - 🚀 Starting automated email processing pipeline
+2025-07-18 15:07:46,651 - INFO - 🔄 Starting step: Email Ingestion
+2025-07-18 15:07:46,651 - INFO - 📋 Command: C:\Users\ChristopherCato\AppData\Local\Programs\Python\Python313\python.exe scripts/run_email_ingestion.py --max-emails 5 --action fetch --folder Intake
+2025-07-18 15:07:50,977 - INFO - ✅ Email Ingestion completed successfully in 4.3s
+2025-07-18 15:07:52,977 - INFO - 🔄 Starting step: LLM Data Extraction
+2025-07-18 15:07:52,978 - INFO - 📋 Command: C:\Users\ChristopherCato\AppData\Local\Programs\Python\Python313\python.exe scripts/run_llm_extraction.py --resume --archive
+2025-07-18 15:07:56,676 - INFO - ✅ LLM Data Extraction completed successfully in 3.7s
+2025-07-18 15:07:56,677 - INFO - 📤 Output: ðŸš€ Starting archive process...
+âœ… Successfully archived 0 directories to data\emails\archive
+ðŸ”§ DEBUG: Using 33 fields from sample: ['referral', 'employer_address', 'employer_email', 'injury_description', 'diagnosis_code', 'icd_code', 'diagnosis_description', 'intake_client_company', 'intake_client_email', 'intake_client_name', 'intake_adjuster_name', 'intake_adjuster_email', 'intake_adjuster_phone', 'intake_client_phone', 'patient_name', 'patient_gender', 'patient_id', 'order_number', 'patient_dob', 'patient_doi', 'intake_instructions', 'patient_address', 'patient_email', 'patient_phone', 'intake_preferred_provider', 'intake_requested_procedure', 'patient_instructions', 'priority', 'referring_provider_name', 'referring_provider_npi', 'referring_provider_address', 'referring_provider_email', 'referring_provider_phone']
+ðŸ”— Connecting to database: intake-crm.db
+âœ… Database connection established
+ðŸš€ Running extraction on 11 directories
+ðŸ”§ DEBUG: Processing directory: 20250627_162834_AAMkADBlMGM0OTU0LTJk_C7001738_JUAN_GRAJALES_DOL_061
+ðŸ”§ DEBUG: Processing directory: 20250627_162843_AAMkADBlMGM0OTU0LTJk_Stephanie_Abel_2410_00535
+ðŸ”§ DEBUG: Processing directory: 20250627_162849_AAMkADBlMGM0OTU0LTJk_23C87K663469_Cruz_Duran_Jorge
+ðŸ”§ DEBUG: Processing directory: 20250627_162854_AAMkADBlMGM0OTU0LTJk_Nilandy_Rangel_D1400373
+ðŸ”§ DEBUG: Processing directory: 20250627_162859_AAMkADBlMGM0OTU0LTJk_2510_00754_-_LANARRIA_A_MILLS
+ðŸ”§ DEBUG: Processing directory: 20250627_162904_AAMkADBlMGM0OTU0LTJk_WC2025643625_Retail_Pena_Sarah
+ðŸ”§ DEBUG: Processing directory: 20250710_093824_AAMkADBlMGM0OTU0LTJk_25D55M642356_-_Rodney_Box_-_DO
+ðŸ”§ DEBUG: Processing directory: 20250710_093828_AAMkADBlMGM0OTU0LTJk_PGS1025065550_Jackson_James_-_
+ðŸ”§ DEBUG: Processing directory: 20250710_093833_AAMkADBlMGM0OTU0LTJk_William_Jones_2510_00724
+ðŸ”§ DEBUG: Processing directory: 20250710_093835_AAMkADBlMGM0OTU0LTJk_Wemheuer_William_CBF25012127_-
+ðŸ”§ DEBUG: Processing directory: archive
+âœ… Successfully processed 0/11 directories
+ðŸ”— Database connection closed
+
+ðŸ“¦ Archiving processed emails...
+2025-07-18 15:07:58,678 - INFO - 🔄 Starting step: Address Geocoding
+2025-07-18 15:07:58,678 - INFO - 📋 Command: C:\Users\ChristopherCato\AppData\Local\Programs\Python\Python313\python.exe scripts/geocode_addresses.py
+2025-07-18 15:07:59,699 - INFO - ✅ Address Geocoding completed successfully in 1.0s
+2025-07-18 15:08:01,699 - INFO - 🔄 Starting step: S3 Document Upload
+2025-07-18 15:08:01,700 - INFO - 📋 Command: C:\Users\ChristopherCato\AppData\Local\Programs\Python\Python313\python.exe scripts/upload_docs_to_s3.py --has-extracted
+2025-07-18 15:08:02,755 - ERROR - ❌ S3 Document Upload failed with return code 1
+2025-07-18 15:08:02,755 - ERROR - ⏹️  Pipeline stopped due to failure in S3 Upload
+2025-07-18 15:08:02,755 - INFO - 
+📊 PIPELINE EXECUTION SUMMARY
+==================================================
+Start Time: 2025-07-18 15:07:46
+End Time: 2025-07-18 15:08:02
+Total Duration: 0.3 minutes
+Overall Status: ❌ FAILED
+
+📋 STEP RESULTS:
+------------------------------
+Email Ingestion: ✅ PASS (4.3s)
+LLM Data Extraction: ✅ PASS (3.7s)
+Address Geocoding: ✅ PASS (1.0s)
+S3 Document Upload: ❌ FAIL (1.1s)
+
+📈 STATISTICS:
+------------------------------
+Total Steps: 4
+Successful Steps: 3
+Failed Steps: 1
+Total Errors: 1
+
+2025-07-18 15:08:02,757 - INFO - 📄 Detailed results saved to: logs\pipeline_results_20250718_150746.json

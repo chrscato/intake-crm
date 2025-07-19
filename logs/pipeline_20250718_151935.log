@@ -1,0 +1,1100 @@
+2025-07-18 15:19:35,523 - INFO - [STARTING] Automated pipeline at 2025-07-18 15:19:35.522694
+2025-07-18 15:19:35,523 - INFO - [LOG] Log file: logs\pipeline_20250718_151935.log
+2025-07-18 15:19:35,523 - INFO - 🔍 Checking prerequisites...
+2025-07-18 15:19:35,524 - INFO - ✅ All prerequisites satisfied
+2025-07-18 15:19:35,524 - INFO - 🚀 Starting automated email processing pipeline
+2025-07-18 15:19:35,524 - INFO - 🔄 Starting step: Email Ingestion
+2025-07-18 15:19:35,524 - INFO - 📋 Command: C:\Users\ChristopherCato\AppData\Local\Programs\Python\Python313\python.exe scripts/run_email_ingestion.py --max-emails 1 --action fetch --folder Intake
+2025-07-18 15:19:39,331 - INFO - ✅ Email Ingestion completed successfully in 3.8s
+2025-07-18 15:19:39,331 - INFO - 📤 Output: 🚀 Email Ingestion Tool
+   Mailbox: assignment@clarity-dx.com
+   Folder: Inbox/Intake
+   Action: fetch
+   Filter: Original inbound only
+
+📧 Fetching emails...
+🔍 Looking for messages in assignment@clarity-dx.com/Inbox/Intake
+📁 Source folder ID: AQMkADBlMGM0OTU0LTJkOWUtNDFiNi1hMTkzLWZiYTUzZGNhNmQ3NQAuAAADqejEcgLQRkOEx9g2AE2OvQEAXEGTY4P1bkO8jpnh-Gd17wAFKQYJGwAAAA==
+📁 Destination folder ID: AQMkADBlMGM0OTU0LTJkOWUtNDFiNi1hMTkzLWZiYTUzZGNhNmQ3NQAuAAADqejEcgLQRkOEx9g2AE2OvQEAXEGTY4P1bkO8jpnh-Gd17wAFKQYJHAAAAA==
+
+📊 Summary:
+- Total messages found: 0
+- Original inbound emails: 0
+- Skipped replies/forwards: 0
+- Failed to process: 0
+- Total attachments: 0
+- Data saved to: data\emails
+
+✅ Email fetching completed!
+   Processed: 0 emails
+   Attachments: 0 files
+   Saved to: data\emails
+
+🎉 All done!
+2025-07-18 15:19:41,332 - INFO - 🔄 Starting step: LLM Data Extraction
+2025-07-18 15:19:41,332 - INFO - 📋 Command: C:\Users\ChristopherCato\AppData\Local\Programs\Python\Python313\python.exe scripts/run_llm_extraction.py --archive
+2025-07-18 15:22:02,161 - INFO - ✅ LLM Data Extraction completed successfully in 140.8s
+2025-07-18 15:22:02,161 - INFO - 📤 Output: 🔧 DEBUG: Using 33 fields from sample: ['referral', 'employer_address', 'employer_email', 'injury_description', 'diagnosis_code', 'icd_code', 'diagnosis_description', 'intake_client_company', 'intake_client_email', 'intake_client_name', 'intake_adjuster_name', 'intake_adjuster_email', 'intake_adjuster_phone', 'intake_client_phone', 'patient_name', 'patient_gender', 'patient_id', 'order_number', 'patient_dob', 'patient_doi', 'intake_instructions', 'patient_address', 'patient_email', 'patient_phone', 'intake_preferred_provider', 'intake_requested_procedure', 'patient_instructions', 'priority', 'referring_provider_name', 'referring_provider_npi', 'referring_provider_address', 'referring_provider_email', 'referring_provider_phone']
+🔗 Connecting to database: intake-crm.db
+✅ Database connection established
+🚀 Running extraction on 11 directories
+🔧 DEBUG: Processing directory: 20250627_162834_AAMkADBlMGM0OTU0LTJk_C7001738_JUAN_GRAJALES_DOL_061
+🔧 DEBUG: Checking required files...
+🔧 DEBUG: Summary file exists: True
+🔧 DEBUG: Metadata file exists: True
+🔧 DEBUG: Attachments dir exists: True
+🔧 DEBUG: Loading JSON files...
+🔧 DEBUG: JSON files loaded successfully
+🔧 DEBUG: Email text length: 10349 characters
+🔧 DEBUG: Found 7 attachments
+🔧 DEBUG: Checking attachment: Document.pdf
+🔧 DEBUG: Attachment suffix: .pdf
+🔧 DEBUG: Supported file type: True
+🔍 Adding Document.pdf to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 117046 bytes
+🔧 DEBUG: Added Document.pdf to processing list
+🔧 DEBUG: Checking attachment: image269152.png
+🔧 DEBUG: Attachment suffix: .png
+🔧 DEBUG: Supported file type: True
+🔍 Adding image269152.png to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 1823 bytes
+🔧 DEBUG: Added image269152.png to processing list
+🔧 DEBUG: Checking attachment: image322368.png
+🔧 DEBUG: Attachment suffix: .png
+🔧 DEBUG: Supported file type: True
+🔍 Adding image322368.png to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 572 bytes
+🔧 DEBUG: Added image322368.png to processing list
+🔧 DEBUG: Checking attachment: image518828.png
+🔧 DEBUG: Attachment suffix: .png
+🔧 DEBUG: Supported file type: True
+🔍 Adding image518828.png to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 773 bytes
+🔧 DEBUG: Added image518828.png to processing list
+🔧 DEBUG: Checking attachment: image589009.png
+🔧 DEBUG: Attachment suffix: .png
+🔧 DEBUG: Supported file type: True
+🔍 Adding image589009.png to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 495 bytes
+🔧 DEBUG: Added image589009.png to processing list
+🔧 DEBUG: Checking attachment: MedicalReportForm2.pdf
+🔧 DEBUG: Attachment suffix: .pdf
+🔧 DEBUG: Supported file type: True
+🔍 Adding MedicalReportForm2.pdf to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 4731905 bytes
+🔧 DEBUG: Added MedicalReportForm2.pdf to processing list
+🔧 DEBUG: Checking attachment: MedicalReportingForm.pdf
+🔧 DEBUG: Attachment suffix: .pdf
+🔧 DEBUG: Supported file type: True
+🔍 Adding MedicalReportingForm.pdf to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 4577665 bytes
+🔧 DEBUG: Added MedicalReportingForm.pdf to processing list
+🔧 DEBUG: Processing 7 attachments together
+🔧 DEBUG: Calling consolidated extract function...
+🔧 DEBUG: Starting consolidated extraction for 7 files
+🔧 DEBUG: Email body length: 10349 characters
+🔧 DEBUG: OpenAI API Key set: ✅
+🔧 DEBUG: Processing file 1/7: .pdf
+🔧 DEBUG: Converting PDF to images...
+🔧 DEBUG: PDF converted to 2 page(s)
+🔧 DEBUG: Added PDF page, base64 length: 513980
+🔧 DEBUG: Processing file 2/7: .png
+🔧 DEBUG: Processing image file directly
+🔧 DEBUG: Image base64 length: 2432
+🔧 DEBUG: Processing file 3/7: .png
+🔧 DEBUG: Processing image file directly
+🔧 DEBUG: Image base64 length: 764
+🔧 DEBUG: Processing file 4/7: .png
+🔧 DEBUG: Processing image file directly
+🔧 DEBUG: Image base64 length: 1032
+🔧 DEBUG: Processing file 5/7: .png
+🔧 DEBUG: Processing image file directly
+🔧 DEBUG: Image base64 length: 660
+🔧 DEBUG: Processing file 6/7: .pdf
+🔧 DEBUG: Converting PDF to images...
+🔧 DEBUG: PDF converted to 1 page(s)
+🔧 DEBUG: Added PDF page, base64 length: 693108
+🔧 DEBUG: Processing file 7/7: .pdf
+🔧 DEBUG: Converting PDF to images...
+🔧 DEBUG: PDF converted to 1 page(s)
+🔧 DEBUG: Added PDF page, base64 length: 655932
+🔧 DEBUG: Prepared content with 8 items (1 text + 7 images)
+🔧 DEBUG: Preparing OpenAI API call...
+🔧 DEBUG: Using model: gpt-4o-mini
+🔧 DEBUG: Max tokens: 2048
+🔧 DEBUG: Making OpenAI API call...
+🔧 DEBUG: OpenAI API call completed
+🔧 DEBUG: Response object type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+🔧 DEBUG: Number of choices: 1
+🔧 DEBUG: Response content length: 1344
+🔧 DEBUG: Response content preview: ```json
+{
+  "referral": true,
+  "employer_address": "P.O. Box 110279, BRADENTON, FL 342110004",
+  "employer_email": null,
+  "injury_description": "Employee was playing soccer, injured left knee",
+  "d...
+🔧 DEBUG: Attempting to parse JSON...
+🔧 DEBUG: JSON parsing successful
+🔧 DEBUG: Parsed data keys: ['referral', 'employer_address', 'employer_email', 'injury_description', 'diagnosis_code', 'icd_code', 'diagnosis_description', 'intake_client_company', 'intake_client_email', 'intake_client_name', 'intake_adjuster_name', 'intake_adjuster_email', 'intake_adjuster_phone', 'intake_client_phone', 'patient_name', 'patient_gender', 'patient_id', 'order_number', 'patient_dob', 'patient_doi', 'intake_instructions', 'patient_address', 'patient_email', 'patient_phone', 'intake_preferred_provider', 'intake_requested_procedure', 'patient_instructions', 'priority', 'referring_provider_name', 'referring_provider_npi', 'referring_provider_address', 'referring_provider_email', 'referring_provider_phone']
+🔧 DEBUG: Consolidated extraction completed successfully
+❌ Database update failed for 20250627_162834_AAMkADBlMGM0OTU0LTJk_C7001738_JUAN_GRAJALES_DOL_061: 38 values for 37 columns
+❌ Failed to update database for 20250627_162834_AAMkADBlMGM0OTU0LTJk_C7001738_JUAN_GRAJALES_DOL_061
+🔧 DEBUG: Processing directory: 20250627_162843_AAMkADBlMGM0OTU0LTJk_Stephanie_Abel_2410_00535
+🔧 DEBUG: Checking required files...
+🔧 DEBUG: Summary file exists: True
+🔧 DEBUG: Metadata file exists: True
+🔧 DEBUG: Attachments dir exists: True
+🔧 DEBUG: Loading JSON files...
+🔧 DEBUG: JSON files loaded successfully
+🔧 DEBUG: Email text length: 4589 characters
+🔧 DEBUG: Found 4 attachments
+🔧 DEBUG: Checking attachment: image001.png
+🔧 DEBUG: Attachment suffix: .png
+🔧 DEBUG: Supported file type: True
+🔍 Adding image001.png to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 1199302 bytes
+🔧 DEBUG: Added image001.png to processing list
+🔧 DEBUG: Checking attachment: Stephanie_Abel_FROI.pdf
+🔧 DEBUG: Attachment suffix: .pdf
+🔧 DEBUG: Supported file type: True
+🔍 Adding Stephanie_Abel_FROI.pdf to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 93608 bytes
+🔧 DEBUG: Added Stephanie_Abel_FROI.pdf to processing list
+🔧 DEBUG: Checking attachment: Stephanie_Abel_L_Knee_MRI_Order_Murphy_6-26-25.pdf
+🔧 DEBUG: Attachment suffix: .pdf
+🔧 DEBUG: Supported file type: True
+🔍 Adding Stephanie_Abel_L_Knee_MRI_Order_Murphy_6-26-25.pdf to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 1404807 bytes
+🔧 DEBUG: Added Stephanie_Abel_L_Knee_MRI_Order_Murphy_6-26-25.pdf to processing list
+🔧 DEBUG: Checking attachment: Stephanie_Abel_REF_2.docx
+🔧 DEBUG: Attachment suffix: .docx
+🔧 DEBUG: Supported file type: False
+🔧 DEBUG: Skipping unsupported file: Stephanie_Abel_REF_2.docx
+🔧 DEBUG: Processing 3 attachments together
+🔧 DEBUG: Calling consolidated extract function...
+🔧 DEBUG: Starting consolidated extraction for 3 files
+🔧 DEBUG: Email body length: 4589 characters
+🔧 DEBUG: OpenAI API Key set: ✅
+🔧 DEBUG: Processing file 1/3: .png
+🔧 DEBUG: Processing image file directly
+🔧 DEBUG: Image base64 length: 1599072
+🔧 DEBUG: Processing file 2/3: .pdf
+🔧 DEBUG: Converting PDF to images...
+🔧 DEBUG: PDF converted to 2 page(s)
+🔧 DEBUG: Added PDF page, base64 length: 498176
+🔧 DEBUG: Processing file 3/3: .pdf
+🔧 DEBUG: Converting PDF to images...
+🔧 DEBUG: PDF converted to 1 page(s)
+🔧 DEBUG: Added PDF page, base64 length: 505096
+🔧 DEBUG: Prepared content with 4 items (1 text + 3 images)
+🔧 DEBUG: Preparing OpenAI API call...
+🔧 DEBUG: Using model: gpt-4o-mini
+🔧 DEBUG: Max tokens: 2048
+🔧 DEBUG: Making OpenAI API call...
+🔧 DEBUG: OpenAI API call completed
+🔧 DEBUG: Response object type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+🔧 DEBUG: Number of choices: 1
+🔧 DEBUG: Response content length: 1380
+🔧 DEBUG: Response content preview: ```json
+{
+  "referral": true,
+  "employer_address": "8083 Parramore Rd, Jacksonville, FL 32244",
+  "employer_email": null,
+  "injury_description": "Officer was kicked in the knee by suspect while tryi...
+🔧 DEBUG: Attempting to parse JSON...
+🔧 DEBUG: JSON parsing successful
+🔧 DEBUG: Parsed data keys: ['referral', 'employer_address', 'employer_email', 'injury_description', 'diagnosis_code', 'icd_code', 'diagnosis_description', 'intake_client_company', 'intake_client_email', 'intake_client_name', 'intake_adjuster_name', 'intake_adjuster_email', 'intake_adjuster_phone', 'intake_client_phone', 'patient_name', 'patient_gender', 'patient_id', 'order_number', 'patient_dob', 'patient_doi', 'intake_instructions', 'patient_address', 'patient_email', 'patient_phone', 'intake_preferred_provider', 'intake_requested_procedure', 'patient_instructions', 'priority', 'referring_provider_name', 'referring_provider_npi', 'referring_provider_address', 'referring_provider_email', 'referring_provider_phone']
+🔧 DEBUG: Consolidated extraction completed successfully
+❌ Database update failed for 20250627_162843_AAMkADBlMGM0OTU0LTJk_Stephanie_Abel_2410_00535: 38 values for 37 columns
+❌ Failed to update database for 20250627_162843_AAMkADBlMGM0OTU0LTJk_Stephanie_Abel_2410_00535
+🔧 DEBUG: Processing directory: 20250627_162849_AAMkADBlMGM0OTU0LTJk_23C87K663469_Cruz_Duran_Jorge
+🔧 DEBUG: Checking required files...
+🔧 DEBUG: Summary file exists: True
+🔧 DEBUG: Metadata file exists: True
+🔧 DEBUG: Attachments dir exists: True
+🔧 DEBUG: Loading JSON files...
+🔧 DEBUG: JSON files loaded successfully
+🔧 DEBUG: Email text length: 3596 characters
+🔧 DEBUG: Found 5 attachments
+🔧 DEBUG: Checking attachment: Cert_JorCru_03-28-2025.pdf
+🔧 DEBUG: Attachment suffix: .pdf
+🔧 DEBUG: Supported file type: True
+🔍 Adding Cert_JorCru_03-28-2025.pdf to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 215642 bytes
+🔧 DEBUG: Added Cert_JorCru_03-28-2025.pdf to processing list
+🔧 DEBUG: Checking attachment: image001.png
+🔧 DEBUG: Attachment suffix: .png
+🔧 DEBUG: Supported file type: True
+🔍 Adding image001.png to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 10960 bytes
+🔧 DEBUG: Added image001.png to processing list
+🔧 DEBUG: Checking attachment: image002.jpg
+🔧 DEBUG: Attachment suffix: .jpg
+🔧 DEBUG: Supported file type: True
+🔍 Adding image002.jpg to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 2912 bytes
+🔧 DEBUG: Added image002.jpg to processing list
+🔧 DEBUG: Checking attachment: image003.png
+🔧 DEBUG: Attachment suffix: .png
+🔧 DEBUG: Supported file type: True
+🔍 Adding image003.png to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 10410 bytes
+🔧 DEBUG: Added image003.png to processing list
+🔧 DEBUG: Checking attachment: image004.png
+🔧 DEBUG: Attachment suffix: .png
+🔧 DEBUG: Supported file type: True
+🔍 Adding image004.png to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 17038 bytes
+🔧 DEBUG: Added image004.png to processing list
+🔧 DEBUG: Processing 5 attachments together
+🔧 DEBUG: Calling consolidated extract function...
+🔧 DEBUG: Starting consolidated extraction for 5 files
+🔧 DEBUG: Email body length: 3596 characters
+🔧 DEBUG: OpenAI API Key set: ✅
+🔧 DEBUG: Processing file 1/5: .pdf
+🔧 DEBUG: Converting PDF to images...
+🔧 DEBUG: PDF converted to 2 page(s)
+🔧 DEBUG: Added PDF page, base64 length: 350004
+🔧 DEBUG: Processing file 2/5: .png
+🔧 DEBUG: Processing image file directly
+🔧 DEBUG: Image base64 length: 14616
+🔧 DEBUG: Processing file 3/5: .jpg
+🔧 DEBUG: Processing image file directly
+🔧 DEBUG: Image base64 length: 3884
+🔧 DEBUG: Processing file 4/5: .png
+🔧 DEBUG: Processing image file directly
+🔧 DEBUG: Image base64 length: 13880
+🔧 DEBUG: Processing file 5/5: .png
+🔧 DEBUG: Processing image file directly
+🔧 DEBUG: Image base64 length: 22720
+🔧 DEBUG: Prepared content with 6 items (1 text + 5 images)
+🔧 DEBUG: Preparing OpenAI API call...
+🔧 DEBUG: Using model: gpt-4o-mini
+🔧 DEBUG: Max tokens: 2048
+🔧 DEBUG: Making OpenAI API call...
+🔧 DEBUG: OpenAI API call completed
+🔧 DEBUG: Response object type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+🔧 DEBUG: Number of choices: 1
+🔧 DEBUG: Response content length: 1265
+🔧 DEBUG: Response content preview: ```json
+{
+  "referral": true,
+  "employer_address": null,
+  "employer_email": null,
+  "injury_description": null,
+  "diagnosis_code": null,
+  "icd_code": null,
+  "diagnosis_description": null,
+  "inta...
+🔧 DEBUG: Attempting to parse JSON...
+🔧 DEBUG: JSON parsing successful
+🔧 DEBUG: Parsed data keys: ['referral', 'employer_address', 'employer_email', 'injury_description', 'diagnosis_code', 'icd_code', 'diagnosis_description', 'intake_client_company', 'intake_client_email', 'intake_client_name', 'intake_adjuster_name', 'intake_adjuster_email', 'intake_adjuster_phone', 'intake_client_phone', 'patient_name', 'patient_gender', 'patient_id', 'order_number', 'patient_dob', 'patient_doi', 'intake_instructions', 'patient_address', 'patient_email', 'patient_phone', 'intake_preferred_provider', 'intake_requested_procedure', 'patient_instructions', 'priority', 'referring_provider_name', 'referring_provider_npi', 'referring_provider_address', 'referring_provider_email', 'referring_provider_phone']
+🔧 DEBUG: Consolidated extraction completed successfully
+❌ Database update failed for 20250627_162849_AAMkADBlMGM0OTU0LTJk_23C87K663469_Cruz_Duran_Jorge: 38 values for 37 columns
+❌ Failed to update database for 20250627_162849_AAMkADBlMGM0OTU0LTJk_23C87K663469_Cruz_Duran_Jorge
+🔧 DEBUG: Processing directory: 20250627_162854_AAMkADBlMGM0OTU0LTJk_Nilandy_Rangel_D1400373
+🔧 DEBUG: Checking required files...
+🔧 DEBUG: Summary file exists: True
+🔧 DEBUG: Metadata file exists: True
+🔧 DEBUG: Attachments dir exists: True
+🔧 DEBUG: Loading JSON files...
+🔧 DEBUG: JSON files loaded successfully
+🔧 DEBUG: Email text length: 3745 characters
+🔧 DEBUG: Found 4 attachments
+🔧 DEBUG: Checking attachment: image001.png
+🔧 DEBUG: Attachment suffix: .png
+🔧 DEBUG: Supported file type: True
+🔍 Adding image001.png to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 6742 bytes
+🔧 DEBUG: Added image001.png to processing list
+🔧 DEBUG: Checking attachment: image003.png
+🔧 DEBUG: Attachment suffix: .png
+🔧 DEBUG: Supported file type: True
+🔍 Adding image003.png to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 3832 bytes
+🔧 DEBUG: Added image003.png to processing list
+🔧 DEBUG: Checking attachment: N_Rangel_MRI_L_knee_RX.pdf
+🔧 DEBUG: Attachment suffix: .pdf
+🔧 DEBUG: Supported file type: True
+🔍 Adding N_Rangel_MRI_L_knee_RX.pdf to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 91428 bytes
+🔧 DEBUG: Added N_Rangel_MRI_L_knee_RX.pdf to processing list
+🔧 DEBUG: Checking attachment: NOI.pdf
+🔧 DEBUG: Attachment suffix: .pdf
+🔧 DEBUG: Supported file type: True
+🔍 Adding NOI.pdf to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 119676 bytes
+🔧 DEBUG: Added NOI.pdf to processing list
+🔧 DEBUG: Processing 4 attachments together
+🔧 DEBUG: Calling consolidated extract function...
+🔧 DEBUG: Starting consolidated extraction for 4 files
+🔧 DEBUG: Email body length: 3745 characters
+🔧 DEBUG: OpenAI API Key set: ✅
+🔧 DEBUG: Processing file 1/4: .png
+🔧 DEBUG: Processing image file directly
+🔧 DEBUG: Image base64 length: 8992
+🔧 DEBUG: Processing file 2/4: .png
+🔧 DEBUG: Processing image file directly
+🔧 DEBUG: Image base64 length: 5112
+🔧 DEBUG: Processing file 3/4: .pdf
+🔧 DEBUG: Converting PDF to images...
+🔧 DEBUG: PDF converted to 3 page(s)
+🔧 DEBUG: Added PDF page, base64 length: 763480
+🔧 DEBUG: Processing file 4/4: .pdf
+🔧 DEBUG: Converting PDF to images...
+🔧 DEBUG: PDF converted to 2 page(s)
+🔧 DEBUG: Added PDF page, base64 length: 563312
+🔧 DEBUG: Prepared content with 5 items (1 text + 4 images)
+🔧 DEBUG: Preparing OpenAI API call...
+🔧 DEBUG: Using model: gpt-4o-mini
+🔧 DEBUG: Max tokens: 2048
+🔧 DEBUG: Making OpenAI API call...
+🔧 DEBUG: OpenAI API call completed
+🔧 DEBUG: Response object type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+🔧 DEBUG: Number of choices: 1
+🔧 DEBUG: Response content length: 1338
+🔧 DEBUG: Response content preview: ```json
+{
+  "referral": true,
+  "employer_address": "1960 LANDING BLVD, SARASOTA, FL 34231",
+  "employer_email": null,
+  "injury_description": "Worker was cleaning the restroom, she tripped and fell o...
+🔧 DEBUG: Attempting to parse JSON...
+🔧 DEBUG: JSON parsing successful
+🔧 DEBUG: Parsed data keys: ['referral', 'employer_address', 'employer_email', 'injury_description', 'diagnosis_code', 'icd_code', 'diagnosis_description', 'intake_client_company', 'intake_client_email', 'intake_client_name', 'intake_adjuster_name', 'intake_adjuster_email', 'intake_adjuster_phone', 'intake_client_phone', 'patient_name', 'patient_gender', 'patient_id', 'order_number', 'patient_dob', 'patient_doi', 'intake_instructions', 'patient_address', 'patient_email', 'patient_phone', 'intake_preferred_provider', 'intake_requested_procedure', 'patient_instructions', 'priority', 'referring_provider_name', 'referring_provider_npi', 'referring_provider_address', 'referring_provider_email', 'referring_provider_phone']
+🔧 DEBUG: Consolidated extraction completed successfully
+❌ Database update failed for 20250627_162854_AAMkADBlMGM0OTU0LTJk_Nilandy_Rangel_D1400373: 38 values for 37 columns
+❌ Failed to update database for 20250627_162854_AAMkADBlMGM0OTU0LTJk_Nilandy_Rangel_D1400373
+🔧 DEBUG: Processing directory: 20250627_162859_AAMkADBlMGM0OTU0LTJk_2510_00754_-_LANARRIA_A_MILLS
+🔧 DEBUG: Checking required files...
+🔧 DEBUG: Summary file exists: True
+🔧 DEBUG: Metadata file exists: True
+🔧 DEBUG: Attachments dir exists: True
+🔧 DEBUG: Loading JSON files...
+🔧 DEBUG: JSON files loaded successfully
+🔧 DEBUG: Email text length: 6030 characters
+🔧 DEBUG: Found 4 attachments
+🔧 DEBUG: Checking attachment: First_Report_of_Injury_or_Illness_LMills.pdf
+🔧 DEBUG: Attachment suffix: .pdf
+🔧 DEBUG: Supported file type: True
+🔍 Adding First_Report_of_Injury_or_Illness_LMills.pdf to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 112402 bytes
+🔧 DEBUG: Added First_Report_of_Injury_or_Illness_LMills.pdf to processing list
+🔧 DEBUG: Checking attachment: image001.png
+🔧 DEBUG: Attachment suffix: .png
+🔧 DEBUG: Supported file type: True
+🔍 Adding image001.png to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 14001 bytes
+🔧 DEBUG: Added image001.png to processing list
+🔧 DEBUG: Checking attachment: MRI_Referral_LaNarria_Mills.pdf
+🔧 DEBUG: Attachment suffix: .pdf
+🔧 DEBUG: Supported file type: True
+🔍 Adding MRI_Referral_LaNarria_Mills.pdf to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 117501 bytes
+🔧 DEBUG: Added MRI_Referral_LaNarria_Mills.pdf to processing list
+🔧 DEBUG: Checking attachment: Workers_Comp_Referral_Information-LaNarria_Wells.docx
+🔧 DEBUG: Attachment suffix: .docx
+🔧 DEBUG: Supported file type: False
+🔧 DEBUG: Skipping unsupported file: Workers_Comp_Referral_Information-LaNarria_Wells.docx
+🔧 DEBUG: Processing 3 attachments together
+🔧 DEBUG: Calling consolidated extract function...
+🔧 DEBUG: Starting consolidated extraction for 3 files
+🔧 DEBUG: Email body length: 6030 characters
+🔧 DEBUG: OpenAI API Key set: ✅
+🔧 DEBUG: Processing file 1/3: .pdf
+🔧 DEBUG: Converting PDF to images...
+🔧 DEBUG: PDF converted to 2 page(s)
+🔧 DEBUG: Added PDF page, base64 length: 564200
+🔧 DEBUG: Processing file 2/3: .png
+🔧 DEBUG: Processing image file directly
+🔧 DEBUG: Image base64 length: 18668
+🔧 DEBUG: Processing file 3/3: .pdf
+🔧 DEBUG: Converting PDF to images...
+🔧 DEBUG: PDF converted to 1 page(s)
+🔧 DEBUG: Added PDF page, base64 length: 225172
+🔧 DEBUG: Prepared content with 4 items (1 text + 3 images)
+🔧 DEBUG: Preparing OpenAI API call...
+🔧 DEBUG: Using model: gpt-4o-mini
+🔧 DEBUG: Max tokens: 2048
+🔧 DEBUG: Making OpenAI API call...
+🔧 DEBUG: OpenAI API call completed
+🔧 DEBUG: Response object type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+🔧 DEBUG: Number of choices: 1
+🔧 DEBUG: Response content length: 1510
+🔧 DEBUG: Response content preview: ```json
+{
+  "referral": true,
+  "employer_address": "117 West Duval Street, Suite 335, Jacksonville, FL 32202",
+  "employer_email": null,
+  "injury_description": "Unable to obtain time of report. Witn...
+🔧 DEBUG: Attempting to parse JSON...
+🔧 DEBUG: JSON parsing successful
+🔧 DEBUG: Parsed data keys: ['referral', 'employer_address', 'employer_email', 'injury_description', 'diagnosis_code', 'icd_code', 'diagnosis_description', 'intake_client_company', 'intake_client_email', 'intake_client_name', 'intake_adjuster_name', 'intake_adjuster_email', 'intake_adjuster_phone', 'intake_client_phone', 'patient_name', 'patient_gender', 'patient_id', 'order_number', 'patient_dob', 'patient_doi', 'intake_instructions', 'patient_address', 'patient_email', 'patient_phone', 'intake_preferred_provider', 'intake_requested_procedure', 'patient_instructions', 'priority', 'referring_provider_name', 'referring_provider_npi', 'referring_provider_address', 'referring_provider_email', 'referring_provider_phone']
+🔧 DEBUG: Consolidated extraction completed successfully
+❌ Database update failed for 20250627_162859_AAMkADBlMGM0OTU0LTJk_2510_00754_-_LANARRIA_A_MILLS: 38 values for 37 columns
+❌ Failed to update database for 20250627_162859_AAMkADBlMGM0OTU0LTJk_2510_00754_-_LANARRIA_A_MILLS
+🔧 DEBUG: Processing directory: 20250627_162904_AAMkADBlMGM0OTU0LTJk_WC2025643625_Retail_Pena_Sarah
+🔧 DEBUG: Checking required files...
+🔧 DEBUG: Summary file exists: True
+🔧 DEBUG: Metadata file exists: True
+🔧 DEBUG: Attachments dir exists: True
+🔧 DEBUG: Loading JSON files...
+🔧 DEBUG: JSON files loaded successfully
+🔧 DEBUG: Email text length: 2221 characters
+🔧 DEBUG: Found 3 attachments
+🔧 DEBUG: Checking attachment: FROI_SP.pdf
+🔧 DEBUG: Attachment suffix: .pdf
+🔧 DEBUG: Supported file type: True
+🔍 Adding FROI_SP.pdf to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 600352 bytes
+🔧 DEBUG: Added FROI_SP.pdf to processing list
+🔧 DEBUG: Checking attachment: image001.jpg
+🔧 DEBUG: Attachment suffix: .jpg
+🔧 DEBUG: Supported file type: True
+🔍 Adding image001.jpg to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 1931 bytes
+🔧 DEBUG: Added image001.jpg to processing list
+🔧 DEBUG: Checking attachment: mri_script.pdf
+🔧 DEBUG: Attachment suffix: .pdf
+🔧 DEBUG: Supported file type: True
+🔍 Adding mri_script.pdf to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 72765 bytes
+🔧 DEBUG: Added mri_script.pdf to processing list
+🔧 DEBUG: Processing 3 attachments together
+🔧 DEBUG: Calling consolidated extract function...
+🔧 DEBUG: Starting consolidated extraction for 3 files
+🔧 DEBUG: Email body length: 2221 characters
+🔧 DEBUG: OpenAI API Key set: ✅
+🔧 DEBUG: Processing file 1/3: .pdf
+🔧 DEBUG: Converting PDF to images...
+🔧 DEBUG: PDF converted to 2 page(s)
+🔧 DEBUG: Added PDF page, base64 length: 544460
+🔧 DEBUG: Processing file 2/3: .jpg
+🔧 DEBUG: Processing image file directly
+🔧 DEBUG: Image base64 length: 2576
+🔧 DEBUG: Processing file 3/3: .pdf
+🔧 DEBUG: Converting PDF to images...
+🔧 DEBUG: PDF converted to 1 page(s)
+🔧 DEBUG: Added PDF page, base64 length: 271852
+🔧 DEBUG: Prepared content with 4 items (1 text + 3 images)
+🔧 DEBUG: Preparing OpenAI API call...
+🔧 DEBUG: Using model: gpt-4o-mini
+🔧 DEBUG: Max tokens: 2048
+🔧 DEBUG: Making OpenAI API call...
+🔧 DEBUG: OpenAI API call completed
+🔧 DEBUG: Response object type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+🔧 DEBUG: Number of choices: 1
+🔧 DEBUG: Response content length: 1377
+🔧 DEBUG: Response content preview: ```json
+{
+  "referral": true,
+  "employer_address": "P.O. Box 32016 Lakeland FL 33802",
+  "employer_email": null,
+  "injury_description": "Sarah's right knee has been hurt and swollen. She is unable t...
+🔧 DEBUG: Attempting to parse JSON...
+🔧 DEBUG: JSON parsing successful
+🔧 DEBUG: Parsed data keys: ['referral', 'employer_address', 'employer_email', 'injury_description', 'diagnosis_code', 'icd_code', 'diagnosis_description', 'intake_client_company', 'intake_client_email', 'intake_client_name', 'intake_adjuster_name', 'intake_adjuster_email', 'intake_adjuster_phone', 'intake_client_phone', 'patient_name', 'patient_gender', 'patient_id', 'order_number', 'patient_dob', 'patient_doi', 'intake_instructions', 'patient_address', 'patient_email', 'patient_phone', 'intake_preferred_provider', 'intake_requested_procedure', 'patient_instructions', 'priority', 'referring_provider_name', 'referring_provider_npi', 'referring_provider_address', 'referring_provider_email', 'referring_provider_phone']
+🔧 DEBUG: Consolidated extraction completed successfully
+❌ Database update failed for 20250627_162904_AAMkADBlMGM0OTU0LTJk_WC2025643625_Retail_Pena_Sarah: 38 values for 37 columns
+❌ Failed to update database for 20250627_162904_AAMkADBlMGM0OTU0LTJk_WC2025643625_Retail_Pena_Sarah
+🔧 DEBUG: Processing directory: 20250710_093824_AAMkADBlMGM0OTU0LTJk_25D55M642356_-_Rodney_Box_-_DO
+🔧 DEBUG: Checking required files...
+🔧 DEBUG: Summary file exists: True
+🔧 DEBUG: Metadata file exists: True
+🔧 DEBUG: Attachments dir exists: True
+🔧 DEBUG: Loading JSON files...
+🔧 DEBUG: JSON files loaded successfully
+🔧 DEBUG: Email text length: 8079 characters
+🔧 DEBUG: Found 8 attachments
+🔧 DEBUG: Checking attachment: DO-01-3471-163_07-10-2025-08-56.pdf
+🔧 DEBUG: Attachment suffix: .pdf
+🔧 DEBUG: Supported file type: True
+🔍 Adding DO-01-3471-163_07-10-2025-08-56.pdf to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 463987 bytes
+🔧 DEBUG: Added DO-01-3471-163_07-10-2025-08-56.pdf to processing list
+🔧 DEBUG: Checking attachment: image001.png
+🔧 DEBUG: Attachment suffix: .png
+🔧 DEBUG: Supported file type: True
+🔍 Adding image001.png to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 169 bytes
+🔧 DEBUG: Added image001.png to processing list
+🔧 DEBUG: Checking attachment: image003.png
+🔧 DEBUG: Attachment suffix: .png
+🔧 DEBUG: Supported file type: True
+🔍 Adding image003.png to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 8828 bytes
+🔧 DEBUG: Added image003.png to processing list
+🔧 DEBUG: Checking attachment: image004.png
+🔧 DEBUG: Attachment suffix: .png
+🔧 DEBUG: Supported file type: True
+🔍 Adding image004.png to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 2765 bytes
+🔧 DEBUG: Added image004.png to processing list
+🔧 DEBUG: Checking attachment: image005.png
+🔧 DEBUG: Attachment suffix: .png
+🔧 DEBUG: Supported file type: True
+🔍 Adding image005.png to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 5893 bytes
+🔧 DEBUG: Added image005.png to processing list
+🔧 DEBUG: Checking attachment: image007.png
+🔧 DEBUG: Attachment suffix: .png
+🔧 DEBUG: Supported file type: True
+🔍 Adding image007.png to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 121977 bytes
+🔧 DEBUG: Added image007.png to processing list
+🔧 DEBUG: Checking attachment: image008.png
+🔧 DEBUG: Attachment suffix: .png
+🔧 DEBUG: Supported file type: True
+🔍 Adding image008.png to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 184 bytes
+🔧 DEBUG: Added image008.png to processing list
+🔧 DEBUG: Checking attachment: image009.png
+🔧 DEBUG: Attachment suffix: .png
+🔧 DEBUG: Supported file type: True
+🔍 Adding image009.png to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 174 bytes
+🔧 DEBUG: Added image009.png to processing list
+🔧 DEBUG: Processing 8 attachments together
+🔧 DEBUG: Calling consolidated extract function...
+🔧 DEBUG: Starting consolidated extraction for 8 files
+🔧 DEBUG: Email body length: 8079 characters
+🔧 DEBUG: OpenAI API Key set: ✅
+🔧 DEBUG: Processing file 1/8: .pdf
+🔧 DEBUG: Converting PDF to images...
+🔧 DEBUG: PDF converted to 8 page(s)
+🔧 DEBUG: Added PDF page, base64 length: 483688
+🔧 DEBUG: Processing file 2/8: .png
+🔧 DEBUG: Processing image file directly
+🔧 DEBUG: Image base64 length: 228
+🔧 DEBUG: Processing file 3/8: .png
+🔧 DEBUG: Processing image file directly
+🔧 DEBUG: Image base64 length: 11772
+🔧 DEBUG: Processing file 4/8: .png
+🔧 DEBUG: Processing image file directly
+🔧 DEBUG: Image base64 length: 3688
+🔧 DEBUG: Processing file 5/8: .png
+🔧 DEBUG: Processing image file directly
+🔧 DEBUG: Image base64 length: 7860
+🔧 DEBUG: Processing file 6/8: .png
+🔧 DEBUG: Processing image file directly
+🔧 DEBUG: Image base64 length: 162636
+🔧 DEBUG: Processing file 7/8: .png
+🔧 DEBUG: Processing image file directly
+🔧 DEBUG: Image base64 length: 248
+🔧 DEBUG: Processing file 8/8: .png
+🔧 DEBUG: Processing image file directly
+🔧 DEBUG: Image base64 length: 232
+🔧 DEBUG: Prepared content with 9 items (1 text + 8 images)
+🔧 DEBUG: Preparing OpenAI API call...
+🔧 DEBUG: Using model: gpt-4o-mini
+🔧 DEBUG: Max tokens: 2048
+🔧 DEBUG: Making OpenAI API call...
+🔧 DEBUG: OpenAI API call completed
+🔧 DEBUG: Response object type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+🔧 DEBUG: Number of choices: 1
+🔧 DEBUG: Response content length: 1297
+🔧 DEBUG: Response content preview: ```json
+{
+  "referral": true,
+  "employer_address": "CPC Logistics",
+  "employer_email": null,
+  "injury_description": "rear ended by a pick up truck",
+  "diagnosis_code": null,
+  "icd_code": null,
+  ...
+🔧 DEBUG: Attempting to parse JSON...
+🔧 DEBUG: JSON parsing successful
+🔧 DEBUG: Parsed data keys: ['referral', 'employer_address', 'employer_email', 'injury_description', 'diagnosis_code', 'icd_code', 'diagnosis_description', 'intake_client_company', 'intake_client_email', 'intake_client_name', 'intake_adjuster_name', 'intake_adjuster_email', 'intake_adjuster_phone', 'intake_client_phone', 'patient_name', 'patient_gender', 'patient_id', 'order_number', 'patient_dob', 'patient_doi', 'intake_instructions', 'patient_address', 'patient_email', 'patient_phone', 'intake_preferred_provider', 'intake_requested_procedure', 'patient_instructions', 'priority', 'referring_provider_name', 'referring_provider_npi', 'referring_provider_address', 'referring_provider_email', 'referring_provider_phone']
+🔧 DEBUG: Consolidated extraction completed successfully
+❌ Database update failed for 20250710_093824_AAMkADBlMGM0OTU0LTJk_25D55M642356_-_Rodney_Box_-_DO: 38 values for 37 columns
+❌ Failed to update database for 20250710_093824_AAMkADBlMGM0OTU0LTJk_25D55M642356_-_Rodney_Box_-_DO
+🔧 DEBUG: Processing directory: 20250710_093828_AAMkADBlMGM0OTU0LTJk_PGS1025065550_Jackson_James_-_
+🔧 DEBUG: Checking required files...
+🔧 DEBUG: Summary file exists: True
+🔧 DEBUG: Metadata file exists: True
+🔧 DEBUG: Attachments dir exists: True
+🔧 DEBUG: Loading JSON files...
+🔧 DEBUG: JSON files loaded successfully
+🔧 DEBUG: Email text length: 7525 characters
+🔧 DEBUG: Found 3 attachments
+🔧 DEBUG: Checking attachment: 07-08-25_Jackson_James_Imaging-Ref.pdf
+🔧 DEBUG: Attachment suffix: .pdf
+🔧 DEBUG: Supported file type: True
+🔍 Adding 07-08-25_Jackson_James_Imaging-Ref.pdf to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 1246723 bytes
+🔧 DEBUG: Added 07-08-25_Jackson_James_Imaging-Ref.pdf to processing list
+🔧 DEBUG: Checking attachment: 4-11-25_FIRST_REPORT_OF_INJURY_-_JAMES_JACKSON.pdf
+🔧 DEBUG: Attachment suffix: .pdf
+🔧 DEBUG: Supported file type: True
+🔍 Adding 4-11-25_FIRST_REPORT_OF_INJURY_-_JAMES_JACKSON.pdf to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 152760 bytes
+🔧 DEBUG: Added 4-11-25_FIRST_REPORT_OF_INJURY_-_JAMES_JACKSON.pdf to processing list
+🔧 DEBUG: Checking attachment: image001.png
+🔧 DEBUG: Attachment suffix: .png
+🔧 DEBUG: Supported file type: True
+🔍 Adding image001.png to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 7876 bytes
+🔧 DEBUG: Added image001.png to processing list
+🔧 DEBUG: Processing 3 attachments together
+🔧 DEBUG: Calling consolidated extract function...
+🔧 DEBUG: Starting consolidated extraction for 3 files
+🔧 DEBUG: Email body length: 7525 characters
+🔧 DEBUG: OpenAI API Key set: ✅
+🔧 DEBUG: Processing file 1/3: .pdf
+🔧 DEBUG: Converting PDF to images...
+🔧 DEBUG: PDF converted to 1 page(s)
+🔧 DEBUG: Added PDF page, base64 length: 544752
+🔧 DEBUG: Processing file 2/3: .pdf
+🔧 DEBUG: Converting PDF to images...
+🔧 DEBUG: PDF converted to 1 page(s)
+🔧 DEBUG: Added PDF page, base64 length: 625060
+🔧 DEBUG: Processing file 3/3: .png
+🔧 DEBUG: Processing image file directly
+🔧 DEBUG: Image base64 length: 10504
+🔧 DEBUG: Prepared content with 4 items (1 text + 3 images)
+🔧 DEBUG: Preparing OpenAI API call...
+🔧 DEBUG: Using model: gpt-4o-mini
+🔧 DEBUG: Max tokens: 2048
+🔧 DEBUG: Making OpenAI API call...
+🔧 DEBUG: OpenAI API call completed
+🔧 DEBUG: Response object type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+🔧 DEBUG: Number of choices: 1
+🔧 DEBUG: Response content length: 1701
+🔧 DEBUG: Response content preview: ```json
+{
+  "referral": true,
+  "employer_address": "P.O. Box 111, Tampa, FL 33601-1911",
+  "employer_email": null,
+  "injury_description": "discomfort to right elbow indicative of a sprain/strain",
+ ...
+🔧 DEBUG: Attempting to parse JSON...
+🔧 DEBUG: JSON parsing successful
+🔧 DEBUG: Parsed data keys: ['referral', 'employer_address', 'employer_email', 'injury_description', 'diagnosis_code', 'icd_code', 'diagnosis_description', 'intake_client_company', 'intake_client_email', 'intake_client_name', 'intake_adjuster_name', 'intake_adjuster_email', 'intake_adjuster_phone', 'intake_client_phone', 'patient_name', 'patient_gender', 'patient_id', 'order_number', 'patient_dob', 'patient_doi', 'intake_instructions', 'patient_address', 'patient_email', 'patient_phone', 'intake_preferred_provider', 'intake_requested_procedure', 'patient_instructions', 'priority', 'referring_provider_name', 'referring_provider_npi', 'referring_provider_address', 'referring_provider_email', 'referring_provider_phone']
+🔧 DEBUG: Consolidated extraction completed successfully
+❌ Database update failed for 20250710_093828_AAMkADBlMGM0OTU0LTJk_PGS1025065550_Jackson_James_-_: 38 values for 37 columns
+❌ Failed to update database for 20250710_093828_AAMkADBlMGM0OTU0LTJk_PGS1025065550_Jackson_James_-_
+🔧 DEBUG: Processing directory: 20250710_093833_AAMkADBlMGM0OTU0LTJk_William_Jones_2510_00724
+🔧 DEBUG: Checking required files...
+🔧 DEBUG: Summary file exists: True
+🔧 DEBUG: Metadata file exists: True
+🔧 DEBUG: Attachments dir exists: True
+🔧 DEBUG: Loading JSON files...
+🔧 DEBUG: JSON files loaded successfully
+🔧 DEBUG: Email text length: 3404 characters
+🔧 DEBUG: Found 6 attachments
+🔧 DEBUG: Checking attachment: Amelia_Urgent_Care__7-9-25.pdf
+🔧 DEBUG: Attachment suffix: .pdf
+🔧 DEBUG: Supported file type: True
+🔍 Adding Amelia_Urgent_Care__7-9-25.pdf to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 435464 bytes
+🔧 DEBUG: Added Amelia_Urgent_Care__7-9-25.pdf to processing list
+🔧 DEBUG: Checking attachment: Amelia_Urgent_Care_DWC-25_7-9-25.pdf
+🔧 DEBUG: Attachment suffix: .pdf
+🔧 DEBUG: Supported file type: True
+🔍 Adding Amelia_Urgent_Care_DWC-25_7-9-25.pdf to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 202998 bytes
+🔧 DEBUG: Added Amelia_Urgent_Care_DWC-25_7-9-25.pdf to processing list
+🔧 DEBUG: Checking attachment: Amelia_Urgent_Care_MRI_RightKnee_Without_Contrast_Referral_7-9-25.pdf
+🔧 DEBUG: Attachment suffix: .pdf
+🔧 DEBUG: Supported file type: True
+🔍 Adding Amelia_Urgent_Care_MRI_RightKnee_Without_Contrast_Referral_7-9-25.pdf to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 27091 bytes
+🔧 DEBUG: Added Amelia_Urgent_Care_MRI_RightKnee_Without_Contrast_Referral_7-9-25.pdf to processing list
+🔧 DEBUG: Checking attachment: First_Report_of_Injury_or_Illness_-_2025-07-10T070738.159.pdf
+🔧 DEBUG: Attachment suffix: .pdf
+🔧 DEBUG: Supported file type: True
+🔍 Adding First_Report_of_Injury_or_Illness_-_2025-07-10T070738.159.pdf to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 165380 bytes
+🔧 DEBUG: Added First_Report_of_Injury_or_Illness_-_2025-07-10T070738.159.pdf to processing list
+🔧 DEBUG: Checking attachment: image001.gif
+🔧 DEBUG: Attachment suffix: .gif
+🔧 DEBUG: Supported file type: False
+🔧 DEBUG: Skipping unsupported file: image001.gif
+🔧 DEBUG: Checking attachment: Workers_Compensation_Referral_Information_Form_William_Jones_7-10-25.pdf
+🔧 DEBUG: Attachment suffix: .pdf
+🔧 DEBUG: Supported file type: True
+🔍 Adding Workers_Compensation_Referral_Information_Form_William_Jones_7-10-25.pdf to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 509654 bytes
+🔧 DEBUG: Added Workers_Compensation_Referral_Information_Form_William_Jones_7-10-25.pdf to processing list
+🔧 DEBUG: Processing 5 attachments together
+🔧 DEBUG: Calling consolidated extract function...
+🔧 DEBUG: Starting consolidated extraction for 5 files
+🔧 DEBUG: Email body length: 3404 characters
+🔧 DEBUG: OpenAI API Key set: ✅
+🔧 DEBUG: Processing file 1/5: .pdf
+🔧 DEBUG: Converting PDF to images...
+🔧 DEBUG: PDF converted to 8 page(s)
+🔧 DEBUG: Added PDF page, base64 length: 436912
+🔧 DEBUG: Processing file 2/5: .pdf
+🔧 DEBUG: Converting PDF to images...
+🔧 DEBUG: PDF converted to 2 page(s)
+🔧 DEBUG: Added PDF page, base64 length: 1073872
+🔧 DEBUG: Processing file 3/5: .pdf
+🔧 DEBUG: Converting PDF to images...
+🔧 DEBUG: PDF converted to 1 page(s)
+🔧 DEBUG: Added PDF page, base64 length: 287856
+🔧 DEBUG: Processing file 4/5: .pdf
+🔧 DEBUG: Converting PDF to images...
+🔧 DEBUG: PDF converted to 2 page(s)
+🔧 DEBUG: Added PDF page, base64 length: 508160
+🔧 DEBUG: Processing file 5/5: .pdf
+🔧 DEBUG: Converting PDF to images...
+🔧 DEBUG: PDF converted to 1 page(s)
+🔧 DEBUG: Added PDF page, base64 length: 323004
+🔧 DEBUG: Prepared content with 6 items (1 text + 5 images)
+🔧 DEBUG: Preparing OpenAI API call...🚀 Starting archive process...
+✅ Successfully archived 0 directories to data\emails\archive
+
+🔧 DEBUG: Using model: gpt-4o-mini
+🔧 DEBUG: Max tokens: 2048
+🔧 DEBUG: Making OpenAI API call...
+🔧 DEBUG: OpenAI API call completed
+🔧 DEBUG: Response object type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+🔧 DEBUG: Number of choices: 1
+🔧 DEBUG: Response content length: 1571
+🔧 DEBUG: Response content preview: ```json
+{
+  "referral": true,
+  "employer_address": ["117 W. Duval St., Suite 335, Jacksonville, FL 32202"],
+  "employer_email": "bcapers@coj.net",
+  "injury_description": "While working a traffic cra...
+🔧 DEBUG: Attempting to parse JSON...
+🔧 DEBUG: JSON parsing successful
+🔧 DEBUG: Parsed data keys: ['referral', 'employer_address', 'employer_email', 'injury_description', 'diagnosis_code', 'icd_code', 'diagnosis_description', 'intake_client_company', 'intake_client_email', 'intake_client_name', 'intake_adjuster_name', 'intake_adjuster_email', 'intake_adjuster_phone', 'intake_client_phone', 'patient_name', 'patient_gender', 'patient_id', 'order_number', 'patient_dob', 'patient_doi', 'intake_instructions', 'patient_address', 'patient_email', 'patient_phone', 'intake_preferred_provider', 'intake_requested_procedure', 'patient_instructions', 'priority', 'referring_provider_name', 'referring_provider_npi', 'referring_provider_address', 'referring_provider_email', 'referring_provider_phone']
+🔧 DEBUG: Consolidated extraction completed successfully
+❌ Database update failed for 20250710_093833_AAMkADBlMGM0OTU0LTJk_William_Jones_2510_00724: 38 values for 37 columns
+❌ Failed to update database for 20250710_093833_AAMkADBlMGM0OTU0LTJk_William_Jones_2510_00724
+🔧 DEBUG: Processing directory: 20250710_093835_AAMkADBlMGM0OTU0LTJk_Wemheuer_William_CBF25012127_-
+🔧 DEBUG: Checking required files...
+🔧 DEBUG: Summary file exists: True
+🔧 DEBUG: Metadata file exists: True
+🔧 DEBUG: Attachments dir exists: True
+🔧 DEBUG: Loading JSON files...
+🔧 DEBUG: JSON files loaded successfully
+🔧 DEBUG: Email text length: 4078 characters
+🔧 DEBUG: Found 1 attachments
+🔧 DEBUG: Checking attachment: Wemheuer_william_MRI_order_07082025.pdf
+🔧 DEBUG: Attachment suffix: .pdf
+🔧 DEBUG: Supported file type: True
+🔍 Adding Wemheuer_william_MRI_order_07082025.pdf to consolidated processing
+🔧 DEBUG: Reading file bytes...
+🔧 DEBUG: File size: 990787 bytes
+🔧 DEBUG: Added Wemheuer_william_MRI_order_07082025.pdf to processing list
+🔧 DEBUG: Processing 1 attachments together
+🔧 DEBUG: Calling consolidated extract function...
+🔧 DEBUG: Starting consolidated extraction for 1 files
+🔧 DEBUG: Email body length: 4078 characters
+🔧 DEBUG: OpenAI API Key set: ✅
+🔧 DEBUG: Processing file 1/1: .pdf
+🔧 DEBUG: Converting PDF to images...
+🔧 DEBUG: PDF converted to 1 page(s)
+🔧 DEBUG: Added PDF page, base64 length: 574824
+🔧 DEBUG: Prepared content with 2 items (1 text + 1 images)
+🔧 DEBUG: Preparing OpenAI API call...
+🔧 DEBUG: Using model: gpt-4o-mini
+🔧 DEBUG: Max tokens: 2048
+🔧 DEBUG: Making OpenAI API call...
+🔧 DEBUG: OpenAI API call completed
+🔧 DEBUG: Response object type: <class 'openai.types.chat.chat_completion.ChatCompletion'>
+🔧 DEBUG: Number of choices: 1
+🔧 DEBUG: Response content length: 1275
+🔧 DEBUG: Response content preview: ```json
+{
+  "referral": true,
+  "employer_address": null,
+  "employer_email": null,
+  "injury_description": null,
+  "diagnosis_code": ["Y99.0", "M25.562", "M25.552"],
+  "icd_code": null,
+  "diagnosis_...
+🔧 DEBUG: Attempting to parse JSON...
+🔧 DEBUG: JSON parsing successful
+🔧 DEBUG: Parsed data keys: ['referral', 'employer_address', 'employer_email', 'injury_description', 'diagnosis_code', 'icd_code', 'diagnosis_description', 'intake_client_company', 'intake_client_email', 'intake_client_name', 'intake_adjuster_name', 'intake_adjuster_email', 'intake_adjuster_phone', 'intake_client_phone', 'patient_name', 'patient_gender', 'patient_id', 'order_number', 'patient_dob', 'patient_doi', 'intake_instructions', 'patient_address', 'patient_email', 'patient_phone', 'intake_preferred_provider', 'intake_requested_procedure', 'patient_instructions', 'priority', 'referring_provider_name', 'referring_provider_npi', 'referring_provider_address', 'referring_provider_email', 'referring_provider_phone']
+🔧 DEBUG: Consolidated extraction completed successfully
+❌ Database update failed for 20250710_093835_AAMkADBlMGM0OTU0LTJk_Wemheuer_William_CBF25012127_-: 38 values for 37 columns
+❌ Failed to update database for 20250710_093835_AAMkADBlMGM0OTU0LTJk_Wemheuer_William_CBF25012127_-
+🔧 DEBUG: Processing directory: archive
+🔧 DEBUG: Checking required files...
+🔧 DEBUG: Summary file exists: False
+🔧 DEBUG: Metadata file exists: False
+🔧 DEBUG: Attachments dir exists: False
+⚠️  Missing summary or metadata in archive, skipping
+✅ Successfully processed 0/11 directories
+🔗 Database connection closed
+
+📦 Archiving processed emails...
+2025-07-18 15:22:04,194 - INFO - 🔄 Starting step: Address Geocoding
+2025-07-18 15:22:04,194 - INFO - 📋 Command: C:\Users\ChristopherCato\AppData\Local\Programs\Python\Python313\python.exe scripts/geocode_addresses.py
+2025-07-18 15:22:05,147 - INFO - ✅ Address Geocoding completed successfully in 1.0s
+2025-07-18 15:22:05,148 - INFO - 📤 Output: 🗺️  Starting geocoding process...
+   Database: intake-crm.db
+   Force refresh: False
+   Dry run: False
+✅ Created location index
+✅ No addresses need geocoding
+2025-07-18 15:22:07,148 - INFO - 🔄 Starting step: S3 Document Upload
+2025-07-18 15:22:07,149 - INFO - 📋 Command: C:\Users\ChristopherCato\AppData\Local\Programs\Python\Python313\python.exe scripts/upload_docs_to_s3.py
+2025-07-18 15:22:23,425 - INFO - ✅ S3 Document Upload completed successfully in 16.3s
+2025-07-18 15:22:23,425 - INFO - 📤 Output: 🔗 Connected to S3 bucket: intake-crm-prod
+📁 Scanning directory: data\emails
+📋 Found 11 directories
+📤 Will process 11 directories
+
+🚀 Starting upload of 11 directories...
+
+📤 [1/11] Uploading: 20250627_162834_AAMkADBlMGM0OTU0LTJk_C7001738_JUAN_GRAJALES_DOL_061
+📤 Uploading email directory: data\emails\20250627_162834_AAMkADBlMGM0OTU0LTJk_C7001738_JUAN_GRAJALES_DOL_061
+   S3 prefix: data/20250627_162834_AAMkADBlMGM0OTU0LTJk_C7001738_JUAN_GRAJALES_DOL_061
+   ✅ email_metadata.json
+   ✅ summary.json
+   ✅ attachments\Document.pdf
+   ✅ attachments\image269152.png
+   ✅ attachments\image322368.png
+   ✅ attachments\image518828.png
+   ✅ attachments\image589009.png
+   ✅ attachments\MedicalReportForm2.pdf
+   ✅ attachments\MedicalReportingForm.pdf
+   📋 Upload manifest: data/20250627_162834_AAMkADBlMGM0OTU0LTJk_C7001738_JUAN_GRAJALES_DOL_061/upload_manifest.json
+✅ Successfully uploaded 9 files
+
+📤 [2/11] Uploading: 20250627_162843_AAMkADBlMGM0OTU0LTJk_Stephanie_Abel_2410_00535
+📤 Uploading email directory: data\emails\20250627_162843_AAMkADBlMGM0OTU0LTJk_Stephanie_Abel_2410_00535
+   S3 prefix: data/20250627_162843_AAMkADBlMGM0OTU0LTJk_Stephanie_Abel_2410_00535
+   ✅ email_metadata.json
+   ✅ summary.json
+   ✅ attachments\image001.png
+   ✅ attachments\Stephanie_Abel_FROI.pdf
+   ✅ attachments\Stephanie_Abel_L_Knee_MRI_Order_Murphy_6-26-25.pdf
+   ✅ attachments\Stephanie_Abel_REF_2.docx
+   📋 Upload manifest: data/20250627_162843_AAMkADBlMGM0OTU0LTJk_Stephanie_Abel_2410_00535/upload_manifest.json
+✅ Successfully uploaded 6 files
+
+📤 [3/11] Uploading: 20250627_162849_AAMkADBlMGM0OTU0LTJk_23C87K663469_Cruz_Duran_Jorge
+📤 Uploading email directory: data\emails\20250627_162849_AAMkADBlMGM0OTU0LTJk_23C87K663469_Cruz_Duran_Jorge
+   S3 prefix: data/20250627_162849_AAMkADBlMGM0OTU0LTJk_23C87K663469_Cruz_Duran_Jorge
+   ✅ email_metadata.json
+   ✅ summary.json
+   ✅ attachments\Cert_JorCru_03-28-2025.pdf
+   ✅ attachments\image001.png
+   ✅ attachments\image002.jpg
+   ✅ attachments\image003.png
+   ✅ attachments\image004.png
+   📋 Upload manifest: data/20250627_162849_AAMkADBlMGM0OTU0LTJk_23C87K663469_Cruz_Duran_Jorge/upload_manifest.json
+✅ Successfully uploaded 7 files
+
+📤 [4/11] Uploading: 20250627_162854_AAMkADBlMGM0OTU0LTJk_Nilandy_Rangel_D1400373
+📤 Uploading email directory: data\emails\20250627_162854_AAMkADBlMGM0OTU0LTJk_Nilandy_Rangel_D1400373
+   S3 prefix: data/20250627_162854_AAMkADBlMGM0OTU0LTJk_Nilandy_Rangel_D1400373
+   ✅ email_metadata.json
+   ✅ summary.json
+   ✅ attachments\image001.png
+   ✅ attachments\image003.png
+   ✅ attachments\NOI.pdf
+   ✅ attachments\N_Rangel_MRI_L_knee_RX.pdf
+   📋 Upload manifest: data/20250627_162854_AAMkADBlMGM0OTU0LTJk_Nilandy_Rangel_D1400373/upload_manifest.json
+✅ Successfully uploaded 6 files
+
+📤 [5/11] Uploading: 20250627_162859_AAMkADBlMGM0OTU0LTJk_2510_00754_-_LANARRIA_A_MILLS
+📤 Uploading email directory: data\emails\20250627_162859_AAMkADBlMGM0OTU0LTJk_2510_00754_-_LANARRIA_A_MILLS
+   S3 prefix: data/20250627_162859_AAMkADBlMGM0OTU0LTJk_2510_00754_-_LANARRIA_A_MILLS
+   ✅ email_metadata.json
+   ✅ summary.json
+   ✅ attachments\First_Report_of_Injury_or_Illness_LMills.pdf
+   ✅ attachments\image001.png
+   ✅ attachments\MRI_Referral_LaNarria_Mills.pdf
+   ✅ attachments\Workers_Comp_Referral_Information-LaNarria_Wells.docx
+   📋 Upload manifest: data/20250627_162859_AAMkADBlMGM0OTU0LTJk_2510_00754_-_LANARRIA_A_MILLS/upload_manifest.json
+✅ Successfully uploaded 6 files
+
+📤 [6/11] Uploading: 20250627_162904_AAMkADBlMGM0OTU0LTJk_WC2025643625_Retail_Pena_Sarah
+📤 Uploading email directory: data\emails\20250627_162904_AAMkADBlMGM0OTU0LTJk_WC2025643625_Retail_Pena_Sarah
+   S3 prefix: data/20250627_162904_AAMkADBlMGM0OTU0LTJk_WC2025643625_Retail_Pena_Sarah
+   ✅ email_metadata.json
+   ✅ summary.json
+   ✅ attachments\FROI_SP.pdf
+   ✅ attachments\image001.jpg
+   ✅ attachments\mri_script.pdf
+   📋 Upload manifest: data/20250627_162904_AAMkADBlMGM0OTU0LTJk_WC2025643625_Retail_Pena_Sarah/upload_manifest.json
+✅ Successfully uploaded 5 files
+
+📤 [7/11] Uploading: 20250710_093824_AAMkADBlMGM0OTU0LTJk_25D55M642356_-_Rodney_Box_-_DO
+📤 Uploading email directory: data\emails\20250710_093824_AAMkADBlMGM0OTU0LTJk_25D55M642356_-_Rodney_Box_-_DO
+   S3 prefix: data/20250710_093824_AAMkADBlMGM0OTU0LTJk_25D55M642356_-_Rodney_Box_-_DO
+   ✅ email_metadata.json
+   ✅ summary.json
+   ✅ attachments\DO-01-3471-163_07-10-2025-08-56.pdf
+   ✅ attachments\image001.png
+   ✅ attachments\image003.png
+   ✅ attachments\image004.png
+   ✅ attachments\image005.png
+   ✅ attachments\image007.png
+   ✅ attachments\image008.png
+   ✅ attachments\image009.png
+   📋 Upload manifest: data/20250710_093824_AAMkADBlMGM0OTU0LTJk_25D55M642356_-_Rodney_Box_-_DO/upload_manifest.json
+✅ Successfully uploaded 10 files
+
+📤 [8/11] Uploading: 20250710_093828_AAMkADBlMGM0OTU0LTJk_PGS1025065550_Jackson_James_-_
+📤 Uploading email directory: data\emails\20250710_093828_AAMkADBlMGM0OTU0LTJk_PGS1025065550_Jackson_James_-_
+   S3 prefix: data/20250710_093828_AAMkADBlMGM0OTU0LTJk_PGS1025065550_Jackson_James_-_
+   ✅ email_metadata.json
+   ✅ summary.json
+   ✅ attachments\07-08-25_Jackson_James_Imaging-Ref.pdf
+   ✅ attachments\4-11-25_FIRST_REPORT_OF_INJURY_-_JAMES_JACKSON.pdf
+   ✅ attachments\image001.png
+   📋 Upload manifest: data/20250710_093828_AAMkADBlMGM0OTU0LTJk_PGS1025065550_Jackson_James_-_/upload_manifest.json
+✅ Successfully uploaded 5 files
+
+📤 [9/11] Uploading: 20250710_093833_AAMkADBlMGM0OTU0LTJk_William_Jones_2510_00724
+📤 Uploading email directory: data\emails\20250710_093833_AAMkADBlMGM0OTU0LTJk_William_Jones_2510_00724
+   S3 prefix: data/20250710_093833_AAMkADBlMGM0OTU0LTJk_William_Jones_2510_00724
+   ✅ email_metadata.json
+   ✅ summary.json
+   ✅ attachments\Amelia_Urgent_Care_DWC-25_7-9-25.pdf
+   ✅ attachments\Amelia_Urgent_Care_MRI_RightKnee_Without_Contrast_Referral_7-9-25.pdf
+   ✅ attachments\Amelia_Urgent_Care__7-9-25.pdf
+   ✅ attachments\First_Report_of_Injury_or_Illness_-_2025-07-10T070738.159.pdf
+   ✅ attachments\image001.gif
+   ✅ attachments\Workers_Compensation_Referral_Information_Form_William_Jones_7-10-25.pdf
+   📋 Upload manifest: data/20250710_093833_AAMkADBlMGM0OTU0LTJk_William_Jones_2510_00724/upload_manifest.json
+✅ Successfully uploaded 8 files
+
+📤 [10/11] Uploading: 20250710_093835_AAMkADBlMGM0OTU0LTJk_Wemheuer_William_CBF25012127_-
+📤 Uploading email directory: data\emails\20250710_093835_AAMkADBlMGM0OTU0LTJk_Wemheuer_William_CBF25012127_-
+   S3 prefix: data/20250710_093835_AAMkADBlMGM0OTU0LTJk_Wemheuer_William_CBF25012127_-
+   ✅ email_metadata.json
+   ✅ summary.json
+   ✅ attachments\Wemheuer_william_MRI_order_07082025.pdf
+   📋 Upload manifest: data/20250710_093835_AAMkADBlMGM0OTU0LTJk_Wemheuer_William_CBF25012127_-/upload_manifest.json
+✅ Successfully uploaded 3 files
+
+📤 [11/11] Uploading: archive
+📤 Uploading email directory: data\emails\archive
+   S3 prefix: data/archive
+   ✅ 20250627_162806_AAMkADBlMGM0OTU0LTJk_Workers_Compensation_Claim_WC2\email_metadata.json
+   ✅ 20250627_162806_AAMkADBlMGM0OTU0LTJk_Workers_Compensation_Claim_WC2\extracted.json
+   ✅ 20250627_162806_AAMkADBlMGM0OTU0LTJk_Workers_Compensation_Claim_WC2\summary.json
+   ✅ 20250627_162813_AAMkADBlMGM0OTU0LTJk_AUTHORIZATION_Regarding_KRYSTA\email_metadata.json
+   ✅ 20250627_162813_AAMkADBlMGM0OTU0LTJk_AUTHORIZATION_Regarding_KRYSTA\extracted.json
+   ✅ 20250627_162813_AAMkADBlMGM0OTU0LTJk_AUTHORIZATION_Regarding_KRYSTA\summary.json
+   ✅ 20250627_162818_AAMkADBlMGM0OTU0LTJk_WC2025651204_Distribution_Mitc\email_metadata.json
+   ✅ 20250627_162818_AAMkADBlMGM0OTU0LTJk_WC2025651204_Distribution_Mitc\extracted.json
+   ✅ 20250627_162818_AAMkADBlMGM0OTU0LTJk_WC2025651204_Distribution_Mitc\summary.json
+   ✅ 20250627_162824_AAMkADBlMGM0OTU0LTJk_190622199-001_PARRA_DAVID\email_metadata.json
+   ✅ 20250627_162824_AAMkADBlMGM0OTU0LTJk_190622199-001_PARRA_DAVID\extracted.json
+   ✅ 20250627_162824_AAMkADBlMGM0OTU0LTJk_190622199-001_PARRA_DAVID\summary.json
+   ✅ 20250627_162824_AAMkADBlMGM0OTU0LTJk_190622199-001_PARRA_DAVID\attachments\AdjusterCM-Contact-Auth-Request.pdf
+   ✅ 20250627_162824_AAMkADBlMGM0OTU0LTJk_190622199-001_PARRA_DAVID\attachments\image001.png
+   ✅ 20250627_162824_AAMkADBlMGM0OTU0LTJk_190622199-001_PARRA_DAVID\attachments\image002.png
+   ✅ 20250627_162824_AAMkADBlMGM0OTU0LTJk_190622199-001_PARRA_DAVID\attachments\image003.png
+   ✅ 20250627_162824_AAMkADBlMGM0OTU0LTJk_190622199-001_PARRA_DAVID\attachments\image004.png
+   ✅ 20250627_162818_AAMkADBlMGM0OTU0LTJk_WC2025651204_Distribution_Mitc\attachments\Demographics_Carmelo.png
+   ✅ 20250627_162818_AAMkADBlMGM0OTU0LTJk_WC2025651204_Distribution_Mitc\attachments\image001.png
+   ✅ 20250627_162818_AAMkADBlMGM0OTU0LTJk_WC2025651204_Distribution_Mitc\attachments\MRI_Referral_Carmelo.pdf
+   ✅ 20250627_162813_AAMkADBlMGM0OTU0LTJk_AUTHORIZATION_Regarding_KRYSTA\attachments\AdjusterCM-Contact-Auth-Request.pdf
+   ✅ 20250627_162813_AAMkADBlMGM0OTU0LTJk_AUTHORIZATION_Regarding_KRYSTA\attachments\image001.png
+   ✅ 20250627_162813_AAMkADBlMGM0OTU0LTJk_AUTHORIZATION_Regarding_KRYSTA\attachments\image002.png
+   ✅ 20250627_162813_AAMkADBlMGM0OTU0LTJk_AUTHORIZATION_Regarding_KRYSTA\attachments\image003.png
+   ✅ 20250627_162813_AAMkADBlMGM0OTU0LTJk_AUTHORIZATION_Regarding_KRYSTA\attachments\image004.png
+   ✅ 20250627_162813_AAMkADBlMGM0OTU0LTJk_AUTHORIZATION_Regarding_KRYSTA\attachments\VOECHTING.docx
+   ✅ 20250627_162806_AAMkADBlMGM0OTU0LTJk_Workers_Compensation_Claim_WC2\attachments\image001.png
+   ✅ 20250627_162806_AAMkADBlMGM0OTU0LTJk_Workers_Compensation_Claim_WC2\attachments\PatientReferralReport_PATRICIACLAGUE_06-26-2025.pdf
+   📋 Upload manifest: data/archive/upload_manifest.json
+✅ Successfully uploaded 28 files
+
+📊 Upload Summary:
+   ✅ Successful: 11
+   ❌ Failed: 0
+   📁 Total: 11
+
+🎉 Successfully uploaded 11 directories to S3!
+   Bucket: intake-crm-prod
+   Structure: intake-crm-prod/data/{email_id}/
+2025-07-18 15:22:25,428 - INFO - 🔄 Starting step: Database Ingestion
+2025-07-18 15:22:25,428 - INFO - 📋 Command: C:\Users\ChristopherCato\AppData\Local\Programs\Python\Python313\python.exe scripts/ingest_to_db.py
+2025-07-18 15:22:25,582 - INFO - ✅ Database Ingestion completed successfully in 0.2s
+2025-07-18 15:22:25,582 - INFO - 📤 Output: 🔧 Creating/connecting to database: intake-crm.db
+🚀 Processing 11 email directories
+⚠️  No extracted.json found in 20250627_162834_AAMkADBlMGM0OTU0LTJk_C7001738_JUAN_GRAJALES_DOL_061
+⚠️  No extracted.json found in 20250627_162843_AAMkADBlMGM0OTU0LTJk_Stephanie_Abel_2410_00535
+⚠️  No extracted.json found in 20250627_162849_AAMkADBlMGM0OTU0LTJk_23C87K663469_Cruz_Duran_Jorge
+⚠️  No extracted.json found in 20250627_162854_AAMkADBlMGM0OTU0LTJk_Nilandy_Rangel_D1400373
+⚠️  No extracted.json found in 20250627_162859_AAMkADBlMGM0OTU0LTJk_2510_00754_-_LANARRIA_A_MILLS
+⚠️  No extracted.json found in 20250627_162904_AAMkADBlMGM0OTU0LTJk_WC2025643625_Retail_Pena_Sarah
+⚠️  No extracted.json found in 20250710_093824_AAMkADBlMGM0OTU0LTJk_25D55M642356_-_Rodney_Box_-_DO
+⚠️  No extracted.json found in 20250710_093828_AAMkADBlMGM0OTU0LTJk_PGS1025065550_Jackson_James_-_
+⚠️  No extracted.json found in 20250710_093833_AAMkADBlMGM0OTU0LTJk_William_Jones_2510_00724
+⚠️  No extracted.json found in 20250710_093835_AAMkADBlMGM0OTU0LTJk_Wemheuer_William_CBF25012127_-
+⚠️  No extracted.json found in archive
+✅ Successfully processed 0/11 directories
+2025-07-18 15:22:27,583 - INFO - 🔄 Starting step: Email Archiving
+2025-07-18 15:22:27,584 - INFO - 📋 Command: C:\Users\ChristopherCato\AppData\Local\Programs\Python\Python313\python.exe scripts/archive_processed_emails.py
+2025-07-18 15:22:27,720 - INFO - ✅ Email Archiving completed successfully in 0.1s
+2025-07-18 15:22:27,721 - INFO - 📤 Output: 🚀 Starting archive process...
+✅ Successfully archived 0 directories to data\emails\archive
+2025-07-18 15:22:29,722 - INFO - 
+📊 PIPELINE EXECUTION SUMMARY
+==================================================
+Start Time: 2025-07-18 15:19:35
+End Time: 2025-07-18 15:22:29
+Total Duration: 2.9 minutes
+Overall Status: ✅ SUCCESS
+
+📋 STEP RESULTS:
+------------------------------
+Email Ingestion: ✅ PASS (3.8s)
+LLM Data Extraction: ✅ PASS (140.8s)
+Address Geocoding: ✅ PASS (1.0s)
+S3 Document Upload: ✅ PASS (16.3s)
+Database Ingestion: ✅ PASS (0.2s)
+Email Archiving: ✅ PASS (0.1s)
+
+📈 STATISTICS:
+------------------------------
+Total Steps: 6
+Successful Steps: 6
+Failed Steps: 0
+Total Errors: 0
+
+2025-07-18 15:22:29,724 - INFO - 📄 Detailed results saved to: logs\pipeline_results_20250718_151935.json

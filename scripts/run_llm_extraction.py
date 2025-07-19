@@ -12,6 +12,16 @@ import sys
 from pathlib import Path
 from datetime import datetime
 
+# Fix Windows console encoding
+if sys.platform.startswith('win'):
+    import os
+    os.environ['PYTHONIOENCODING'] = 'utf-8'
+    # Force UTF-8 encoding for stdout
+    if hasattr(sys.stdout, 'reconfigure'):
+        sys.stdout.reconfigure(encoding='utf-8')
+    if hasattr(sys.stderr, 'reconfigure'):
+        sys.stderr.reconfigure(encoding='utf-8')
+
 # Add repository root to Python path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
@@ -91,7 +101,7 @@ def update_referral_in_database(conn: sqlite3.Connection, email_id: str, consoli
             cursor.execute("""
                 UPDATE referrals SET 
                     conversation_id = ?, email_subject = ?, email_from = ?,
-                    patient_name = ?, patient_dob = ?, patient_doi = ?,
+                    referral = ?, patient_name = ?, patient_dob = ?, patient_doi = ?,
                     patient_gender = ?, patient_id = ?, patient_address = ?,
                     patient_email = ?, patient_phone = ?,
                     order_number = ?, priority = ?, 
@@ -110,6 +120,7 @@ def update_referral_in_database(conn: sqlite3.Connection, email_id: str, consoli
                 WHERE email_id = ?
             """, (
                 conversation_id, email_subject, email_from,
+                consolidated_data.get('referral'),
                 consolidated_data.get('patient_name'),
                 consolidated_data.get('patient_dob'), 
                 consolidated_data.get('patient_doi'),
@@ -152,7 +163,7 @@ def update_referral_in_database(conn: sqlite3.Connection, email_id: str, consoli
             cursor.execute("""
                 INSERT INTO referrals (
                     email_id, conversation_id, email_subject, email_from,
-                    patient_name, patient_dob, patient_doi,
+                    referral, patient_name, patient_dob, patient_doi,
                     patient_gender, patient_id, patient_address,
                     patient_email, patient_phone,
                     order_number, priority, 
@@ -167,9 +178,10 @@ def update_referral_in_database(conn: sqlite3.Connection, email_id: str, consoli
                     referring_provider_address, referring_provider_email,
                     referring_provider_phone, employer_address,
                     employer_email, processed_attachments
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """, (
                 email_id, conversation_id, email_subject, email_from,
+                consolidated_data.get('referral'),
                 consolidated_data.get('patient_name'),
                 consolidated_data.get('patient_dob'), 
                 consolidated_data.get('patient_doi'),
@@ -296,15 +308,37 @@ def process_directory(path: Path, resume: bool, db_conn: sqlite3.Connection) -> 
                 consolidated_data = extract_consolidated(file_bytes_list, email_text, file_extensions)
                 print(f"🔧 DEBUG: Consolidated extraction completed successfully")
                 
-                # Write directly to database instead of creating JSON file
-                success = update_referral_in_database(
+                # Write to database
+                db_success = update_referral_in_database(
                     db_conn, path.name, consolidated_data, 
                     supported_attachments, email_subject, email_from, conversation_id
                 )
                 
-                if success:
-                    print(f"✅ Successfully updated database for {path.name}")
+                # Also create extracted.json file for ingest_to_db.py compatibility
+                extracted_data = {
+                    "email_subject": email_subject,
+                    "email_from": email_from,
+                    "consolidated_data": consolidated_data,
+                    "processed_attachments": supported_attachments,
+                    "extraction_timestamp": datetime.now().isoformat()
+                }
+                
+                extracted_file = path / "extracted.json"
+                try:
+                    with open(extracted_file, "w", encoding="utf-8") as f:
+                        json.dump(extracted_data, f, indent=2, ensure_ascii=False)
+                    print(f"📄 Created extracted.json for {path.name}")
+                    json_success = True
+                except Exception as exc:
+                    print(f"❌ Failed to create extracted.json for {path.name}: {exc}")
+                    json_success = False
+                
+                if db_success and json_success:
+                    print(f"✅ Successfully processed {path.name} (database + JSON)")
                     return True
+                elif db_success:
+                    print(f"⚠️  Database updated but JSON creation failed for {path.name}")
+                    return True  # Still consider it successful since DB was updated
                 else:
                     print(f"❌ Failed to update database for {path.name}")
                     return False

@@ -1,0 +1,35 @@
+2025-07-18 15:18:49,848 - INFO - [STARTING] Automated pipeline at 2025-07-18 15:18:49.847499
+2025-07-18 15:18:49,848 - INFO - [LOG] Log file: logs\pipeline_20250718_151849.log
+2025-07-18 15:18:49,848 - INFO - 🔍 Checking prerequisites...
+2025-07-18 15:18:49,848 - INFO - ✅ All prerequisites satisfied
+2025-07-18 15:18:49,848 - INFO - 🚀 Starting automated email processing pipeline
+2025-07-18 15:18:49,848 - INFO - 🔄 Starting step: Email Ingestion
+2025-07-18 15:18:49,848 - INFO - 📋 Command: C:\Users\ChristopherCato\AppData\Local\Programs\Python\Python313\python.exe scripts/run_email_ingestion.py --max-emails 2 --action fetch --folder Intake
+2025-07-18 15:18:53,765 - INFO - ✅ Email Ingestion completed successfully in 3.9s
+2025-07-18 15:18:53,766 - INFO - 📤 Output: 🚀 Email Ingestion Tool
+   Mailbox: assignment@clarity-dx.com
+   Folder: Inbox/Intake
+   Action: fetch
+   Filter: Original inbound only
+
+📧 Fetching emails...
+🔍 Looking for messages in assignment@clarity-dx.com/Inbox/Intake
+📁 Source folder ID: AQMkADBlMGM0OTU0LTJkOWUtNDFiNi1hMTkzLWZiYTUzZGNhNmQ3NQAuAAADqejEcgLQRkOEx9g2AE2OvQEAXEGTY4P1bkO8jpnh-Gd17wAFKQYJGwAAAA==
+📁 Destination folder ID: AQMkADBlMGM0OTU0LTJkOWUtNDFiNi1hMTkzLWZiYTUzZGNhNmQ3NQAuAAADqejEcgLQRkOEx9g2AE2OvQEAXEGTY4P1bkO8jpnh-Gd17wAFKQYJHAAAAA==
+
+📊 Summary:
+- Total messages found: 0
+- Original inbound emails: 0
+- Skipped replies/forwards: 0
+- Failed to process: 0
+- Total attachments: 0
+- Data saved to: data\emails
+
+✅ Email fetching completed!
+   Processed: 0 emails
+   Attachments: 0 files
+   Saved to: data\emails
+
+🎉 All done!
+2025-07-18 15:18:55,766 - INFO - 🔄 Starting step: LLM Data Extraction
+2025-07-18 15:18:55,767 - INFO - 📋 Command: C:\Users\ChristopherCato\AppData\Local\Programs\Python\Python313\python.exe scripts/run_llm_extraction.py --archive

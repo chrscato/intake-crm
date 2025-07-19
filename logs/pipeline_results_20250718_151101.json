@@ -1,0 +1,46 @@
+{
+  "start_time": "2025-07-18T15:11:01.058497",
+  "steps": [
+    {
+      "name": "Email Ingestion",
+      "start_time": "2025-07-18T15:11:01.061484",
+      "command": "C:\\Users\\ChristopherCato\\AppData\\Local\\Programs\\Python\\Python313\\python.exe scripts/run_email_ingestion.py --max-emails 2 --action fetch --folder Intake",
+      "success": true,
+      "duration_seconds": 4.014064,
+      "output": "\ud83d\ude80 Email Ingestion Tool\n   Mailbox: assignment@clarity-dx.com\n   Folder: Inbox/Intake\n   Action: fetch\n   Filter: Original inbound only\n\n\ud83d\udce7 Fetching emails...\n\ud83d\udd0d Looking for messages in assignment@clarity-dx.com/Inbox/Intake\n\ud83d\udcc1 Source folder ID: AQMkADBlMGM0OTU0LTJkOWUtNDFiNi1hMTkzLWZiYTUzZGNhNmQ3NQAuAAADqejEcgLQRkOEx9g2AE2OvQEAXEGTY4P1bkO8jpnh-Gd17wAFKQYJGwAAAA==\n\ud83d\udcc1 Destination folder ID: AQMkADBlMGM0OTU0LTJkOWUtNDFiNi1hMTkzLWZiYTUzZGNhNmQ3NQAuAAADqejEcgLQRkOEx9g2AE2OvQEAXEGTY4P1bkO8jpnh-Gd17wAFKQYJHAAAAA==\n\n\ud83d\udcca Summary:\n- Total messages found: 0\n- Original inbound emails: 0\n- Skipped replies/forwards: 0\n- Failed to process: 0\n- Total attachments: 0\n- Data saved to: data\\emails\n\n\u2705 Email fetching completed!\n   Processed: 0 emails\n   Attachments: 0 files\n   Saved to: data\\emails\n\n\ud83c\udf89 All done!\n",
+      "error": ""
+    },
+    {
+      "name": "LLM Data Extraction",
+      "start_time": "2025-07-18T15:11:07.077369",
+      "command": "C:\\Users\\ChristopherCato\\AppData\\Local\\Programs\\Python\\Python313\\python.exe scripts/run_llm_extraction.py --resume --archive",
+      "success": true,
+      "duration_seconds": 1.517187,
+      "output": "\ud83d\ude80 Starting archive process...\n\u2705 Successfully archived 0 directories to data\\emails\\archive\n\ud83d\udd27 DEBUG: Using 33 fields from sample: ['referral', 'employer_address', 'employer_email', 'injury_description', 'diagnosis_code', 'icd_code', 'diagnosis_description', 'intake_client_company', 'intake_client_email', 'intake_client_name', 'intake_adjuster_name', 'intake_adjuster_email', 'intake_adjuster_phone', 'intake_client_phone', 'patient_name', 'patient_gender', 'patient_id', 'order_number', 'patient_dob', 'patient_doi', 'intake_instructions', 'patient_address', 'patient_email', 'patient_phone', 'intake_preferred_provider', 'intake_requested_procedure', 'patient_instructions', 'priority', 'referring_provider_name', 'referring_provider_npi', 'referring_provider_address', 'referring_provider_email', 'referring_provider_phone']\n\ud83d\udd17 Connecting to database: intake-crm.db\n\u2705 Database connection established\n\ud83d\ude80 Running extraction on 11 directories\n\ud83d\udd27 DEBUG: Processing directory: 20250627_162834_AAMkADBlMGM0OTU0LTJk_C7001738_JUAN_GRAJALES_DOL_061\n\ud83d\udd27 DEBUG: Processing directory: 20250627_162843_AAMkADBlMGM0OTU0LTJk_Stephanie_Abel_2410_00535\n\ud83d\udd27 DEBUG: Processing directory: 20250627_162849_AAMkADBlMGM0OTU0LTJk_23C87K663469_Cruz_Duran_Jorge\n\ud83d\udd27 DEBUG: Processing directory: 20250627_162854_AAMkADBlMGM0OTU0LTJk_Nilandy_Rangel_D1400373\n\ud83d\udd27 DEBUG: Processing directory: 20250627_162859_AAMkADBlMGM0OTU0LTJk_2510_00754_-_LANARRIA_A_MILLS\n\ud83d\udd27 DEBUG: Processing directory: 20250627_162904_AAMkADBlMGM0OTU0LTJk_WC2025643625_Retail_Pena_Sarah\n\ud83d\udd27 DEBUG: Processing directory: 20250710_093824_AAMkADBlMGM0OTU0LTJk_25D55M642356_-_Rodney_Box_-_DO\n\ud83d\udd27 DEBUG: Processing directory: 20250710_093828_AAMkADBlMGM0OTU0LTJk_PGS1025065550_Jackson_James_-_\n\ud83d\udd27 DEBUG: Processing directory: 20250710_093833_AAMkADBlMGM0OTU0LTJk_William_Jones_2510_00724\n\ud83d\udd27 DEBUG: Processing directory: 20250710_093835_AAMkADBlMGM0OTU0LTJk_Wemheuer_William_CBF25012127_-\n\ud83d\udd27 DEBUG: Processing directory: archive\n\u2705 Successfully processed 0/11 directories\n\ud83d\udd17 Database connection closed\n\n\ud83d\udce6 Archiving processed emails...\n",
+      "error": ""
+    },
+    {
+      "name": "Address Geocoding",
+      "start_time": "2025-07-18T15:11:10.597390",
+      "command": "C:\\Users\\ChristopherCato\\AppData\\Local\\Programs\\Python\\Python313\\python.exe scripts/geocode_addresses.py",
+      "success": true,
+      "duration_seconds": 0.703059,
+      "output": "\ud83d\uddfa\ufe0f  Starting geocoding process...\n   Database: intake-crm.db\n   Force refresh: False\n   Dry run: False\n\u2705 Created location index\n\u2705 No addresses need geocoding\n",
+      "error": ""
+    },
+    {
+      "name": "S3 Document Upload",
+      "start_time": "2025-07-18T15:11:13.303092",
+      "command": "C:\\Users\\ChristopherCato\\AppData\\Local\\Programs\\Python\\Python313\\python.exe scripts/upload_docs_to_s3.py --has-extracted",
+      "success": false,
+      "duration_seconds": 0.79959,
+      "output": "\ud83d\udd17 Connected to S3 bucket: intake-crm-prod\n\ud83d\udcc1 Scanning directory: data\\emails\n\ud83d\udccb Found 11 directories\n\u274c No directories match the specified filters\n",
+      "error": ""
+    }
+  ],
+  "total_emails_processed": 0,
+  "total_errors": 1,
+  "success": false,
+  "end_time": "2025-07-18T15:11:14.103404",
+  "total_duration_seconds": 13.044907
+}

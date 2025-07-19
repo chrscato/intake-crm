@@ -1,0 +1,19 @@
+{
+  "start_time": "2025-07-18T14:09:36.914277",
+  "steps": [
+    {
+      "name": "Email Ingestion",
+      "start_time": "2025-07-18T14:09:37.098090",
+      "command": "C:\\Users\\ChristopherCato\\AppData\\Local\\Programs\\Python\\Python313\\python.exe scripts/run_email_ingestion.py --max-emails 5 --action fetch --folder Intake",
+      "success": false,
+      "duration_seconds": 1.385381,
+      "output": "",
+      "error": "Traceback (most recent call last):\n  File \"C:\\Users\\ChristopherCato\\OneDrive - clarity-dx.com\\code\\intake-crm\\scripts\\run_email_ingestion.py\", line 102, in <module>\n    main()\n    ~~~~^^\n  File \"C:\\Users\\ChristopherCato\\OneDrive - clarity-dx.com\\code\\intake-crm\\scripts\\run_email_ingestion.py\", line 57, in main\n    print(\"\\U0001f680 Email Ingestion Tool\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\ChristopherCato\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode\n    return codecs.charmap_encode(input,self.errors,encoding_table)[0]\n           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nUnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f680' in position 0: character maps to <undefined>\n"
+    }
+  ],
+  "total_emails_processed": 0,
+  "total_errors": 1,
+  "success": false,
+  "end_time": "2025-07-18T14:09:38.489280",
+  "total_duration_seconds": 1.575003
+}

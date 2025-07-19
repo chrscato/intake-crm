@@ -1,0 +1,28 @@
+{
+  "start_time": "2025-07-18T14:35:27.405736",
+  "steps": [
+    {
+      "name": "Email Ingestion",
+      "start_time": "2025-07-18T14:35:27.453683",
+      "command": "C:\\Users\\ChristopherCato\\AppData\\Local\\Programs\\Python\\Python313\\python.exe scripts/run_email_ingestion.py --max-emails 5 --action fetch --folder Intake",
+      "success": true,
+      "duration_seconds": 6.011118,
+      "output": null,
+      "error": ""
+    },
+    {
+      "name": "LLM Data Extraction",
+      "start_time": "2025-07-18T14:35:35.476035",
+      "command": "C:\\Users\\ChristopherCato\\AppData\\Local\\Programs\\Python\\Python313\\python.exe scripts/run_llm_extraction.py --ingest-db --resume --archive",
+      "success": false,
+      "duration_seconds": 3.669207,
+      "output": "\u00f0\u0178\u201d\u00a7 DEBUG: Using 33 fields from sample: ['referral', 'employer_address', 'employer_email', 'injury_description', 'diagnosis_code', 'icd_code', 'diagnosis_description', 'intake_client_company', 'intake_client_email', 'intake_client_name', 'intake_adjuster_name', 'intake_adjuster_email', 'intake_adjuster_phone', 'intake_client_phone', 'patient_name', 'patient_gender', 'patient_id', 'order_number', 'patient_dob', 'patient_doi', 'intake_instructions', 'patient_address', 'patient_email', 'patient_phone', 'intake_preferred_provider', 'intake_requested_procedure', 'patient_instructions', 'priority', 'referring_provider_name', 'referring_provider_npi', 'referring_provider_address', 'referring_provider_email', 'referring_provider_phone']\n",
+      "error": "usage: run_llm_extraction.py [-h] [--limit LIMIT] [--resume] [--archive]\n                             [--db-path DB_PATH]\nrun_llm_extraction.py: error: unrecognized arguments: --ingest-db\n"
+    }
+  ],
+  "total_emails_processed": 0,
+  "total_errors": 1,
+  "success": false,
+  "end_time": "2025-07-18T14:35:39.152527",
+  "total_duration_seconds": 11.746791
+}

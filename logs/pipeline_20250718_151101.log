@@ -1,0 +1,97 @@
+2025-07-18 15:11:01,059 - INFO - [STARTING] Automated pipeline at 2025-07-18 15:11:01.058497
+2025-07-18 15:11:01,059 - INFO - [LOG] Log file: logs\pipeline_20250718_151101.log
+2025-07-18 15:11:01,059 - INFO - 🔍 Checking prerequisites...
+2025-07-18 15:11:01,060 - INFO - ✅ All prerequisites satisfied
+2025-07-18 15:11:01,060 - INFO - 🚀 Starting automated email processing pipeline
+2025-07-18 15:11:01,060 - INFO - 🔄 Starting step: Email Ingestion
+2025-07-18 15:11:01,061 - INFO - 📋 Command: C:\Users\ChristopherCato\AppData\Local\Programs\Python\Python313\python.exe scripts/run_email_ingestion.py --max-emails 2 --action fetch --folder Intake
+2025-07-18 15:11:05,075 - INFO - ✅ Email Ingestion completed successfully in 4.0s
+2025-07-18 15:11:05,075 - INFO - 📤 Output: 🚀 Email Ingestion Tool
+   Mailbox: assignment@clarity-dx.com
+   Folder: Inbox/Intake
+   Action: fetch
+   Filter: Original inbound only
+
+📧 Fetching emails...
+🔍 Looking for messages in assignment@clarity-dx.com/Inbox/Intake
+📁 Source folder ID: AQMkADBlMGM0OTU0LTJkOWUtNDFiNi1hMTkzLWZiYTUzZGNhNmQ3NQAuAAADqejEcgLQRkOEx9g2AE2OvQEAXEGTY4P1bkO8jpnh-Gd17wAFKQYJGwAAAA==
+📁 Destination folder ID: AQMkADBlMGM0OTU0LTJkOWUtNDFiNi1hMTkzLWZiYTUzZGNhNmQ3NQAuAAADqejEcgLQRkOEx9g2AE2OvQEAXEGTY4P1bkO8jpnh-Gd17wAFKQYJHAAAAA==
+
+📊 Summary:
+- Total messages found: 0
+- Original inbound emails: 0
+- Skipped replies/forwards: 0
+- Failed to process: 0
+- Total attachments: 0
+- Data saved to: data\emails
+
+✅ Email fetching completed!
+   Processed: 0 emails
+   Attachments: 0 files
+   Saved to: data\emails
+
+🎉 All done!
+2025-07-18 15:11:07,076 - INFO - 🔄 Starting step: LLM Data Extraction
+2025-07-18 15:11:07,077 - INFO - 📋 Command: C:\Users\ChristopherCato\AppData\Local\Programs\Python\Python313\python.exe scripts/run_llm_extraction.py --resume --archive
+2025-07-18 15:11:08,594 - INFO - ✅ LLM Data Extraction completed successfully in 1.5s
+2025-07-18 15:11:08,595 - INFO - 📤 Output: 🚀 Starting archive process...
+✅ Successfully archived 0 directories to data\emails\archive
+🔧 DEBUG: Using 33 fields from sample: ['referral', 'employer_address', 'employer_email', 'injury_description', 'diagnosis_code', 'icd_code', 'diagnosis_description', 'intake_client_company', 'intake_client_email', 'intake_client_name', 'intake_adjuster_name', 'intake_adjuster_email', 'intake_adjuster_phone', 'intake_client_phone', 'patient_name', 'patient_gender', 'patient_id', 'order_number', 'patient_dob', 'patient_doi', 'intake_instructions', 'patient_address', 'patient_email', 'patient_phone', 'intake_preferred_provider', 'intake_requested_procedure', 'patient_instructions', 'priority', 'referring_provider_name', 'referring_provider_npi', 'referring_provider_address', 'referring_provider_email', 'referring_provider_phone']
+🔗 Connecting to database: intake-crm.db
+✅ Database connection established
+🚀 Running extraction on 11 directories
+🔧 DEBUG: Processing directory: 20250627_162834_AAMkADBlMGM0OTU0LTJk_C7001738_JUAN_GRAJALES_DOL_061
+🔧 DEBUG: Processing directory: 20250627_162843_AAMkADBlMGM0OTU0LTJk_Stephanie_Abel_2410_00535
+🔧 DEBUG: Processing directory: 20250627_162849_AAMkADBlMGM0OTU0LTJk_23C87K663469_Cruz_Duran_Jorge
+🔧 DEBUG: Processing directory: 20250627_162854_AAMkADBlMGM0OTU0LTJk_Nilandy_Rangel_D1400373
+🔧 DEBUG: Processing directory: 20250627_162859_AAMkADBlMGM0OTU0LTJk_2510_00754_-_LANARRIA_A_MILLS
+🔧 DEBUG: Processing directory: 20250627_162904_AAMkADBlMGM0OTU0LTJk_WC2025643625_Retail_Pena_Sarah
+🔧 DEBUG: Processing directory: 20250710_093824_AAMkADBlMGM0OTU0LTJk_25D55M642356_-_Rodney_Box_-_DO
+🔧 DEBUG: Processing directory: 20250710_093828_AAMkADBlMGM0OTU0LTJk_PGS1025065550_Jackson_James_-_
+🔧 DEBUG: Processing directory: 20250710_093833_AAMkADBlMGM0OTU0LTJk_William_Jones_2510_00724
+🔧 DEBUG: Processing directory: 20250710_093835_AAMkADBlMGM0OTU0LTJk_Wemheuer_William_CBF25012127_-
+🔧 DEBUG: Processing directory: archive
+✅ Successfully processed 0/11 directories
+🔗 Database connection closed
+
+📦 Archiving processed emails...
+2025-07-18 15:11:10,597 - INFO - 🔄 Starting step: Address Geocoding
+2025-07-18 15:11:10,597 - INFO - 📋 Command: C:\Users\ChristopherCato\AppData\Local\Programs\Python\Python313\python.exe scripts/geocode_addresses.py
+2025-07-18 15:11:11,300 - INFO - ✅ Address Geocoding completed successfully in 0.7s
+2025-07-18 15:11:11,300 - INFO - 📤 Output: 🗺️  Starting geocoding process...
+   Database: intake-crm.db
+   Force refresh: False
+   Dry run: False
+✅ Created location index
+✅ No addresses need geocoding
+2025-07-18 15:11:13,301 - INFO - 🔄 Starting step: S3 Document Upload
+2025-07-18 15:11:13,302 - INFO - 📋 Command: C:\Users\ChristopherCato\AppData\Local\Programs\Python\Python313\python.exe scripts/upload_docs_to_s3.py --has-extracted
+2025-07-18 15:11:14,102 - ERROR - ❌ S3 Document Upload failed with return code 1
+2025-07-18 15:11:14,103 - INFO - 📤 Output: 🔗 Connected to S3 bucket: intake-crm-prod
+📁 Scanning directory: data\emails
+📋 Found 11 directories
+❌ No directories match the specified filters
+2025-07-18 15:11:14,103 - ERROR - ⏹️  Pipeline stopped due to failure in S3 Upload
+2025-07-18 15:11:14,103 - INFO - 
+📊 PIPELINE EXECUTION SUMMARY
+==================================================
+Start Time: 2025-07-18 15:11:01
+End Time: 2025-07-18 15:11:14
+Total Duration: 0.2 minutes
+Overall Status: ❌ FAILED
+
+📋 STEP RESULTS:
+------------------------------
+Email Ingestion: ✅ PASS (4.0s)
+LLM Data Extraction: ✅ PASS (1.5s)
+Address Geocoding: ✅ PASS (0.7s)
+S3 Document Upload: ❌ FAIL (0.8s)
+
+📈 STATISTICS:
+------------------------------
+Total Steps: 4
+Successful Steps: 3
+Failed Steps: 1
+Total Errors: 1
+
+2025-07-18 15:11:14,104 - INFO - 📄 Detailed results saved to: logs\pipeline_results_20250718_151101.json

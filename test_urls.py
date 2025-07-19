@@ -5,8 +5,8 @@ Test these URL formats with your specific email and conversation IDs
 import urllib.parse
 
 # Your actual IDs from the debug output
-EMAIL_ID = "AAMkAGVmMDEzMTM4LTZmYWUtNDdkNC1hMDZkLWFmYzJmM2YyOWZhOABGAAAAAAAiQ8W967B7TKBjgx9rVEURBwAiIsqMbYjsT5G-T7KZ11NPAAAAAAEMAAAiIsqMbYjsT5G-T7KZ11NPAAAAAAE_AAA="
-CONVERSATION_ID = "AAQkAGVmMDEzMTM4LTZmYWUtNDdkNC1hMDZkLWFmYzJmM2YyOWZhOAAQAGFhYWFhYWFhYWFhYWFhYWE="
+EMAIL_ID = "20250627_162806_AAMkADBlMGM0OTU0LTJk_Workers_Compensation_Claim_WC2"
+CONVERSATION_ID = "AAQkADBlMGM0OTU0LTJkOWUtNDFiNi1hMTkzLWZiYTUzZGNhNmQ3NQAQAJ5o3StpLkTAqUWHaFNn9IA="
 
 def generate_test_urls():
     """Generate all possible URL formats to test."""

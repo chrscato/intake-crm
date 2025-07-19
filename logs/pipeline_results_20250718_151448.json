@@ -1,0 +1,64 @@
+{
+  "start_time": "2025-07-18T15:14:48.308436",
+  "steps": [
+    {
+      "name": "Email Ingestion",
+      "start_time": "2025-07-18T15:14:48.310647",
+      "command": "C:\\Users\\ChristopherCato\\AppData\\Local\\Programs\\Python\\Python313\\python.exe scripts/run_email_ingestion.py --max-emails 1 --action fetch --folder Intake",
+      "success": false,
+      "duration_seconds": 1.071063,
+      "output": "",
+      "error": "Traceback (most recent call last):\n  File \"C:\\Users\\ChristopherCato\\OneDrive - clarity-dx.com\\code\\intake-crm\\scripts\\run_email_ingestion.py\", line 102, in <module>\n    main()\n    ~~~~^^\n  File \"C:\\Users\\ChristopherCato\\OneDrive - clarity-dx.com\\code\\intake-crm\\scripts\\run_email_ingestion.py\", line 57, in main\n    print(\"\\U0001f680 Email Ingestion Tool\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\ChristopherCato\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode\n    return codecs.charmap_encode(input,self.errors,encoding_table)[0]\n           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nUnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f680' in position 0: character maps to <undefined>\n"
+    },
+    {
+      "name": "LLM Data Extraction",
+      "start_time": "2025-07-18T15:14:49.382869",
+      "command": "C:\\Users\\ChristopherCato\\AppData\\Local\\Programs\\Python\\Python313\\python.exe scripts/run_llm_extraction.py --archive",
+      "success": false,
+      "duration_seconds": 3.431223,
+      "output": "",
+      "error": "Traceback (most recent call last):\n  File \"C:\\Users\\ChristopherCato\\OneDrive - clarity-dx.com\\code\\intake-crm\\scripts\\run_llm_extraction.py\", line 18, in <module>\n    from app.processing.openai_agent import extract_consolidated\n  File \"C:\\Users\\ChristopherCato\\OneDrive - clarity-dx.com\\code\\intake-crm\\app\\processing\\openai_agent.py\", line 41, in <module>\n    PROMPT = generate_dynamic_prompt()\n  File \"C:\\Users\\ChristopherCato\\OneDrive - clarity-dx.com\\code\\intake-crm\\app\\processing\\openai_agent.py\", line 23, in generate_dynamic_prompt\n    print(f\"\\U0001f527 DEBUG: Using {len(field_names)} fields from sample: {field_names}\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\ChristopherCato\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode\n    return codecs.charmap_encode(input,self.errors,encoding_table)[0]\n           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nUnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f527' in position 0: character maps to <undefined>\n"
+    },
+    {
+      "name": "Address Geocoding",
+      "start_time": "2025-07-18T15:14:52.816053",
+      "command": "C:\\Users\\ChristopherCato\\AppData\\Local\\Programs\\Python\\Python313\\python.exe scripts/geocode_addresses.py",
+      "success": false,
+      "duration_seconds": 0.874013,
+      "output": "",
+      "error": "Traceback (most recent call last):\n  File \"C:\\Users\\ChristopherCato\\OneDrive - clarity-dx.com\\code\\intake-crm\\scripts\\geocode_addresses.py\", line 367, in <module>\n    main()\n    ~~~~^^\n  File \"C:\\Users\\ChristopherCato\\OneDrive - clarity-dx.com\\code\\intake-crm\\scripts\\geocode_addresses.py\", line 285, in main\n    print(f\"\\U0001f5fa\\ufe0f  Starting geocoding process...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\ChristopherCato\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode\n    return codecs.charmap_encode(input,self.errors,encoding_table)[0]\n           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nUnicodeEncodeError: 'charmap' codec can't encode characters in position 0-1: character maps to <undefined>\n"
+    },
+    {
+      "name": "S3 Document Upload",
+      "start_time": "2025-07-18T15:14:53.691293",
+      "command": "C:\\Users\\ChristopherCato\\AppData\\Local\\Programs\\Python\\Python313\\python.exe scripts/upload_docs_to_s3.py",
+      "success": false,
+      "duration_seconds": 0.903325,
+      "output": "",
+      "error": "Traceback (most recent call last):\n  File \"C:\\Users\\ChristopherCato\\OneDrive - clarity-dx.com\\code\\intake-crm\\scripts\\upload_docs_to_s3.py\", line 150, in main\n    print(f\"\\U0001f517 Connected to S3 bucket: {uploader.bucket}\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\ChristopherCato\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode\n    return codecs.charmap_encode(input,self.errors,encoding_table)[0]\n           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nUnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f517' in position 0: character maps to <undefined>\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"C:\\Users\\ChristopherCato\\OneDrive - clarity-dx.com\\code\\intake-crm\\scripts\\upload_docs_to_s3.py\", line 242, in <module>\n    sys.exit(main())\n             ~~~~^^\n  File \"C:\\Users\\ChristopherCato\\OneDrive - clarity-dx.com\\code\\intake-crm\\scripts\\upload_docs_to_s3.py\", line 152, in main\n    print(f\"\\u274c Failed to connect to S3: {e}\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\ChristopherCato\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode\n    return codecs.charmap_encode(input,self.errors,encoding_table)[0]\n           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nUnicodeEncodeError: 'charmap' codec can't encode character '\\u274c' in position 0: character maps to <undefined>\n"
+    },
+    {
+      "name": "Database Ingestion",
+      "start_time": "2025-07-18T15:14:54.595980",
+      "command": "C:\\Users\\ChristopherCato\\AppData\\Local\\Programs\\Python\\Python313\\python.exe scripts/ingest_to_db.py",
+      "success": false,
+      "duration_seconds": 0.209275,
+      "output": "",
+      "error": "Traceback (most recent call last):\n  File \"C:\\Users\\ChristopherCato\\OneDrive - clarity-dx.com\\code\\intake-crm\\scripts\\ingest_to_db.py\", line 322, in <module>\n    main()\n    ~~~~^^\n  File \"C:\\Users\\ChristopherCato\\OneDrive - clarity-dx.com\\code\\intake-crm\\scripts\\ingest_to_db.py\", line 302, in main\n    print(f\"\\U0001f527 Creating/connecting to database: {db_path}\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\ChristopherCato\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode\n    return codecs.charmap_encode(input,self.errors,encoding_table)[0]\n           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nUnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f527' in position 0: character maps to <undefined>\n"
+    },
+    {
+      "name": "Email Archiving",
+      "start_time": "2025-07-18T15:14:54.806456",
+      "command": "C:\\Users\\ChristopherCato\\AppData\\Local\\Programs\\Python\\Python313\\python.exe scripts/archive_processed_emails.py",
+      "success": false,
+      "duration_seconds": 0.108996,
+      "output": "",
+      "error": "Traceback (most recent call last):\n  File \"C:\\Users\\ChristopherCato\\OneDrive - clarity-dx.com\\code\\intake-crm\\scripts\\archive_processed_emails.py\", line 86, in <module>\n    main()\n    ~~~~^^\n  File \"C:\\Users\\ChristopherCato\\OneDrive - clarity-dx.com\\code\\intake-crm\\scripts\\archive_processed_emails.py\", line 76, in main\n    print(f\"\\U0001f680 Starting archive process...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\ChristopherCato\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py\", line 19, in encode\n    return codecs.charmap_encode(input,self.errors,encoding_table)[0]\n           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nUnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f680' in position 0: character maps to <undefined>\n"
+    }
+  ],
+  "total_emails_processed": 0,
+  "total_errors": 6,
+  "success": false,
+  "end_time": "2025-07-18T15:14:54.916026",
+  "total_duration_seconds": 6.60759
+}

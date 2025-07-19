@@ -12,6 +12,16 @@ from datetime import datetime
 from pathlib import Path
 from typing import Dict, Any, List
 
+# Fix Windows console encoding
+if sys.platform.startswith('win'):
+    import os
+    os.environ['PYTHONIOENCODING'] = 'utf-8'
+    # Force UTF-8 encoding for stdout
+    if hasattr(sys.stdout, 'reconfigure'):
+        sys.stdout.reconfigure(encoding='utf-8')
+    if hasattr(sys.stderr, 'reconfigure'):
+        sys.stderr.reconfigure(encoding='utf-8')
+
 # Add repository root to Python path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 

@@ -1,0 +1,46 @@
+{
+  "start_time": "2025-07-18T14:37:40.997753",
+  "steps": [
+    {
+      "name": "Email Ingestion",
+      "start_time": "2025-07-18T14:37:41.001164",
+      "command": "C:\\Users\\ChristopherCato\\AppData\\Local\\Programs\\Python\\Python313\\python.exe scripts/run_email_ingestion.py --max-emails 5 --action fetch --folder Intake",
+      "success": true,
+      "duration_seconds": 3.952127,
+      "output": null,
+      "error": ""
+    },
+    {
+      "name": "LLM Data Extraction",
+      "start_time": "2025-07-18T14:37:46.954569",
+      "command": "C:\\Users\\ChristopherCato\\AppData\\Local\\Programs\\Python\\Python313\\python.exe scripts/run_llm_extraction.py --resume --archive",
+      "success": true,
+      "duration_seconds": 1.121505,
+      "output": null,
+      "error": ""
+    },
+    {
+      "name": "Address Geocoding",
+      "start_time": "2025-07-18T14:37:50.077661",
+      "command": "C:\\Users\\ChristopherCato\\AppData\\Local\\Programs\\Python\\Python313\\python.exe scripts/geocode_addresses.py",
+      "success": true,
+      "duration_seconds": 1.116609,
+      "output": null,
+      "error": ""
+    },
+    {
+      "name": "S3 Document Upload",
+      "start_time": "2025-07-18T14:37:53.195366",
+      "command": "C:\\Users\\ChristopherCato\\AppData\\Local\\Programs\\Python\\Python313\\python.exe scripts/upload_docs_to_s3.py --has-extracted",
+      "success": false,
+      "duration_seconds": 1.397753,
+      "output": null,
+      "error": ""
+    }
+  ],
+  "total_emails_processed": 0,
+  "total_errors": 1,
+  "success": false,
+  "end_time": "2025-07-18T14:37:54.593506",
+  "total_duration_seconds": 13.595753
+}
